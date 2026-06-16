@@ -190,6 +190,16 @@
 .ord-status-select:focus { border-color: var(--purple-light); color: var(--text); }
 
 /* ── Responsive ── */
-@media (max-width: 1100px) {
+@media (max-width: 900px) {
+    .kanban-board { grid-template-columns: 1fr 1fr; }
+
+    .ord-date-wrap { flex-wrap: wrap; }
+}
+
+@media (max-width: 540px) {
     .kanban-board { grid-template-columns: 1fr; }
+
+    .ord-filters { flex-direction: column; align-items: stretch; }
+    .ord-search-wrap { min-width: unset; }
+    .ord-date-wrap { justify-content: space-between; }
 }

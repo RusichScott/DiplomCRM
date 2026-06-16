@@ -418,3 +418,11 @@
 
 .prod-save-btn:hover    { opacity: 0.9; }
 .prod-save-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ── Mobile responsive ── */
+@media (max-width: 768px) {
+    .prod-table-wrap { overflow-x: auto; }
+    .prod-table { min-width: 600px; }
+
+    .prod-form-row { grid-template-columns: 1fr; }
+}

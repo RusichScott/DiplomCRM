@@ -217,3 +217,11 @@
     color: var(--text-muted);
     font-size: 14px;
 }
+
+/* ── Mobile responsive ── */
+@media (max-width: 768px) {
+    .cust-table-wrap { overflow-x: auto; }
+    .cust-table { min-width: 640px; }
+
+    .cust-toolbar { flex-wrap: wrap; }
+}

@@ -692,12 +692,37 @@ footer {
         opacity: 1;
     }
 
+    /* скрываем выпадашку аккаунта — на мобиле иконка ведёт сразу на логин */
+    .dropdown-content { display: none !important; }
+
+    .header-icons { gap: 14px; }
+
     .hero { padding: 85px 20px; }
     .hero h1 { font-size: 36px; }
+
+    .categories { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 18px; }
+    .products   { grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 18px; }
+
+    .footer-content { grid-template-columns: 1fr 1fr; gap: 28px; }
 }
 
-@media (max-width: 576px) {
-    .hero h1 { font-size: 28px; }
-    .hero p  { font-size: 15px; }
-    .section-title { font-size: 32px; }
+@media (max-width: 480px) {
+    .header-icons .fa-search { display: none; }
+
+    .hero { padding: 60px 16px; margin-bottom: 40px; }
+    .hero h1 { font-size: 26px; }
+    .hero p  { font-size: 14px; }
+
+    .section-title { font-size: 28px; margin-bottom: 28px; }
+
+    .categories { grid-template-columns: 1fr; }
+    .products   { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+
+    .product-img { height: 160px; }
+    .product-content { padding: 12px 14px; }
+    .product-title { font-size: 13px; }
+    .product-price { font-size: 18px; }
+
+    .footer-content { grid-template-columns: 1fr; gap: 24px; }
+    footer { padding: 40px 0 20px; }
 }

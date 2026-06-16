@@ -53,6 +53,12 @@ export default function Dashboard({ onLogout }) {
   const [analytics,   setAnalytics]  = useState(null)
   const [anaLoading,  setAnaLoading] = useState(true)
   const [chartReady,  setChartReady] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  function navClick(i) {
+    setActiveNav(i)
+    setSidebarOpen(false)
+  }
 
   useEffect(() => {
     const t = setTimeout(() => setChartReady(true), 0)
@@ -78,8 +84,21 @@ export default function Dashboard({ onLogout }) {
   return (
     <div className="crm-layout">
 
+      {/* Mobile top bar */}
+      <div className="crm-mobile-bar">
+        <button className="crm-hamburger" onClick={() => setSidebarOpen(s => !s)}>
+          <IconHamburger open={sidebarOpen} />
+        </button>
+        <span className="crm-mobile-logo">Miestilo CRM</span>
+      </div>
+
+      {/* Sidebar overlay */}
+      {sidebarOpen && (
+        <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />
+      )}
+
       {/* Sidebar */}
-      <aside className="sidebar">
+      <aside className={`sidebar ${sidebarOpen ? 'sidebar-open' : ''}`}>
         <div className="sidebar-logo">
           <span className="sidebar-logo-name">Miestilo</span>
           <span className="sidebar-logo-sub">CRM</span>
@@ -89,7 +108,7 @@ export default function Dashboard({ onLogout }) {
             <button
               key={item.label}
               className={`nav-item ${activeNav === i ? 'active' : ''}`}
-              onClick={() => setActiveNav(i)}
+              onClick={() => navClick(i)}
             >
               <span className="nav-icon">{item.icon}</span>
               <span className="nav-label">{item.label}</span>
@@ -252,6 +271,17 @@ function IconHistory() {
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <circle cx="12" cy="12" r="10"/>
       <polyline points="12 6 12 12 16 14"/>
+    </svg>
+  )
+}
+function IconHamburger({ open }) {
+  return open ? (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  ) : (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
     </svg>
   )
 }

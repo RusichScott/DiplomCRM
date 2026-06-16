@@ -311,3 +311,12 @@
     font-size: 13.5px;
     color: var(--text);
 }
+
+/* ── Mobile responsive ── */
+@media (max-width: 768px) {
+    .oh-table-wrap { overflow-x: auto; }
+    .oh-table { min-width: 580px; }
+
+    .oh-detail { flex-direction: column; gap: 24px; padding: 16px 16px 20px; }
+    .oh-meta { min-width: unset; }
+}

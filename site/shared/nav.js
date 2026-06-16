@@ -19,7 +19,15 @@ const accountBtn    = document.getElementById('accountBtn');
 const loginDropdown = document.getElementById('loginDropdown');
 let dropdownTimeout;
 
+accountBtn?.addEventListener('click', () => {
+    if (window.innerWidth <= 768) {
+        window.location.href = '../login/login.html';
+        return;
+    }
+});
+
 accountBtn?.addEventListener('mouseenter', () => {
+    if (window.innerWidth <= 768) return;
     clearTimeout(dropdownTimeout);
     loginDropdown?.classList.add('active');
 });
