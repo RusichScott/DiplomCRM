@@ -3,14 +3,15 @@ const fastify      = require('fastify')({ logger: true });
 const { Server }   = require('socket.io');
 
 fastify.register(require('@fastify/cors'), {
-    origin:      true,
+    origin: (_origin, cb) => cb(null, true),
     credentials: true,
-    methods:     ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS']
+    methods:     ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Origin', 'Accept']
 });
 
 // Socket.io — подключается к тому же HTTP-серверу что и Fastify
 const io = new Server(fastify.server, {
-    cors: { origin: true, credentials: true }
+    cors: { origin: (_origin, cb) => cb(null, true), credentials: true }
 });
 fastify.decorate('io', io);
 
