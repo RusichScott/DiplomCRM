@@ -2,29 +2,15 @@ require('dotenv').config();
 const fastify      = require('fastify')({ logger: true });
 const { Server }   = require('socket.io');
 
-const ALLOWED_ORIGINS = [
-    'https://miecrm.netlify.app',
-    'https://miesite.netlify.app',
-    'http://127.0.0.1:5500',
-    'http://localhost:5500',
-    'http://127.0.0.1:5501',
-    'http://127.0.0.1:5173',
-    'http://localhost:5173',
-    'null'
-];
-
 fastify.register(require('@fastify/cors'), {
-    origin:      ALLOWED_ORIGINS,
+    origin:      true,
     credentials: true,
     methods:     ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS']
 });
 
 // Socket.io — подключается к тому же HTTP-серверу что и Fastify
 const io = new Server(fastify.server, {
-    cors: {
-        origin:      ALLOWED_ORIGINS,
-        credentials: true
-    }
+    cors: { origin: true, credentials: true }
 });
 fastify.decorate('io', io);
 
