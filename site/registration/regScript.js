@@ -1,4 +1,4 @@
-const API = 'http://127.0.0.1:3000';
+const API = 'https://diplomcrm-production.up.railway.app';
 
 function showModal(message, type, callback) {
     const overlay = document.getElementById('customModal');

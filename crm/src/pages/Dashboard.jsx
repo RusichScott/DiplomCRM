@@ -6,7 +6,7 @@ import Products     from './Products'
 import OrderHistory from './OrderHistory'
 import './Dashboard.css'
 
-const API = 'http://127.0.0.1:3000'
+const API = 'https://diplomcrm-production.up.railway.app'
 
 const PERIODS = [
   { key: 'day',   label: 'День' },

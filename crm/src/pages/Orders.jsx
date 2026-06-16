@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './Orders.css'
 
-const API = 'http://127.0.0.1:3000'
+const API = 'https://diplomcrm-production.up.railway.app'
 
 const COLUMNS = [
     { key: 'processing', label: 'В обработке', color: '#f59e0b', statuses: ['pending', 'processing'] },
