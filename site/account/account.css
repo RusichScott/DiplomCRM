@@ -762,7 +762,8 @@ footer {
 
     .nav-links.active { display: flex; }
 
-    .mobile-menu-btn { display: block; }
+    .mobile-menu-btn { display: block; order: 3; margin-left: 14px; }
+    .header-icons { order: 2; margin-left: auto; }
 
     .footer-content {
         grid-template-columns: repeat(2, 1fr);

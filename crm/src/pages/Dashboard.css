@@ -448,6 +448,7 @@
   .crm-main {
     margin-left: 0;
     padding-top: 52px;
+    overflow-x: hidden;
   }
 
   .crm-header { padding: 20px 16px 0; }

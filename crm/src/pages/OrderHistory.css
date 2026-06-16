@@ -314,8 +314,12 @@
 
 /* ── Mobile responsive ── */
 @media (max-width: 768px) {
-    .oh-table-wrap { overflow-x: auto; }
-    .oh-table { min-width: 580px; }
+    .oh-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+    .oh-table { min-width: 540px; }
 
     .oh-detail { flex-direction: column; gap: 24px; padding: 16px 16px 20px; }
     .oh-meta { min-width: unset; }

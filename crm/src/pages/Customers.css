@@ -220,8 +220,12 @@
 
 /* ── Mobile responsive ── */
 @media (max-width: 768px) {
-    .cust-table-wrap { overflow-x: auto; }
-    .cust-table { min-width: 640px; }
+    .cust-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+    .cust-table { min-width: 580px; }
 
     .cust-toolbar { flex-wrap: wrap; }
 }

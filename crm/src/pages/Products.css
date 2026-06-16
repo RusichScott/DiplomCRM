@@ -421,8 +421,12 @@
 
 /* ── Mobile responsive ── */
 @media (max-width: 768px) {
-    .prod-table-wrap { overflow-x: auto; }
-    .prod-table { min-width: 600px; }
+    .prod-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+    .prod-table { min-width: 560px; }
 
     .prod-form-row { grid-template-columns: 1fr; }
 }
