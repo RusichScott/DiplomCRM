@@ -3,6 +3,8 @@ const fastify      = require('fastify')({ logger: true });
 const { Server }   = require('socket.io');
 
 const ALLOWED_ORIGINS = [
+    'https://lovely-gaufre-7b1d88.netlify.app',
+    'https://miesite.netlify.app',
     'http://127.0.0.1:5500',
     'http://localhost:5500',
     'http://127.0.0.1:5501',
