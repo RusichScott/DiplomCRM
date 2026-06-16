@@ -1,0 +1,11 @@
+{
+  "name": "miestilo-crm",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently --names \"SERVER,CRM\" -c \"blue,magenta\" \"npm run dev --prefix server\" \"npm run dev --prefix crm\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

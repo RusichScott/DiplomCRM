@@ -1,0 +1,297 @@
+:root {
+    --purple:       #60179c;
+    --purple-light: #8b35cc;
+    --purple-dark:  #3d0f63;
+    --purple-pale:  rgba(96, 23, 156, 0.08);
+    --text:         #1e1b2e;
+    --text-sec:     #555;
+    --text-muted:   #999;
+    --bg:           #f8f5fc;
+    --border:       #ece5f5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    background: var(--bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.registration-container {
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(96, 23, 156, 0.16);
+    overflow: hidden;
+    border: 1px solid var(--border);
+}
+
+/* ── Header ── */
+.registration-header {
+    background: linear-gradient(145deg, #8b35cc 0%, #3d0f63 100%);
+    color: white;
+    padding: 38px 32px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.registration-header::before {
+    content: '';
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    top: -70px;
+    right: -55px;
+}
+
+.registration-header::after {
+    content: '';
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    bottom: -45px;
+    left: -25px;
+}
+
+.registration-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+    letter-spacing: 0.5px;
+}
+
+.registration-header p {
+    opacity: 0.82;
+    font-size: 14px;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+}
+
+/* ── Form ── */
+.registration-form {
+    padding: 32px;
+}
+
+.back-to-home {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 22px;
+    color: #bbb;
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.3s;
+}
+
+.back-to-home:hover {
+    color: var(--purple);
+}
+
+.back-to-home i {
+    font-size: 12px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-weight: 500;
+    color: var(--text-sec);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 13px 15px;
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-size: 15px;
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: all 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--purple);
+    background: white;
+    box-shadow: 0 0 0 3px var(--purple-pale);
+}
+
+.form-row {
+    display: flex;
+    gap: 14px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.btn-register {
+    width: 100%;
+    background: linear-gradient(135deg, var(--purple-light), var(--purple-dark));
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 5px 20px rgba(96, 23, 156, 0.28);
+}
+
+.btn-register:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(96, 23, 156, 0.38);
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 22px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.login-link a {
+    color: var(--purple);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.login-link a:hover {
+    color: var(--purple-dark);
+    text-decoration: underline;
+}
+
+/* ── Custom Modal ── */
+.custom-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-modal-overlay.active {
+    display: flex;
+}
+
+.custom-modal {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(96, 23, 156, 0.3);
+    border: 1px solid var(--border);
+    animation: modalIn 0.25s ease;
+}
+
+@keyframes modalIn {
+    from { opacity: 0; transform: translateY(-14px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.custom-modal-header {
+    background: linear-gradient(145deg, #8b35cc, #3d0f63);
+    padding: 30px 20px 24px;
+    text-align: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.custom-modal-header::before {
+    content: '';
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    top: -50px;
+    right: -40px;
+}
+
+.custom-modal-header i {
+    font-size: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.custom-modal-header span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    position: relative;
+    z-index: 1;
+}
+
+.custom-modal-message {
+    padding: 24px 28px 18px;
+    text-align: center;
+    color: var(--text-sec);
+    font-size: 15px;
+    line-height: 1.65;
+}
+
+.custom-modal-btn {
+    display: block;
+    margin: 0 28px 26px;
+    width: calc(100% - 56px);
+    padding: 13px;
+    background: linear-gradient(135deg, var(--purple-light), var(--purple-dark));
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    transition: all 0.25s;
+    box-shadow: 0 4px 16px rgba(96, 23, 156, 0.28);
+}
+
+.custom-modal-btn:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+}

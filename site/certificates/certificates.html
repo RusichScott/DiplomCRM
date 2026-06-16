@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сертификаты — Miestilo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../index/style.css">
+    <link rel="stylesheet" href="certificates.css">
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="header-top">
+            <a href="../index/index.html" class="logo">Mie<span>stilo</span></a>
+            <div class="mobile-menu-btn"><i class="fas fa-bars"></i></div>
+            <ul class="nav-links">
+                <li><a href="../index/index.html">Главная</a></li>
+                <li><a href="../collections/collections.html">Коллекции</a></li>
+                <li><a href="../looks/looks.html">Образы</a></li>
+                <li><a href="../certificates/certificates.html" class="nav-active">Сертификаты</a></li>
+                <li><a href="../sales/sales.html">Акции</a></li>
+                <li><a href="../new/new.html">Новинки</a></li>
+            </ul>
+            <div class="header-icons">
+                <i class="fas fa-search"></i>
+                <div class="account-dropdown">
+                    <i class="fas fa-user" id="accountBtn"></i>
+                    <div class="dropdown-content" id="loginDropdown">
+                        <div class="dropdown-header">
+                            <h3>Вход в аккаунт</h3>
+                            <p>Войдите, чтобы получить доступ ко всем функциям</p>
+                        </div>
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" placeholder="Ваш email">
+                            </div>
+                            <div class="form-group">
+                                <label>Пароль</label>
+                                <input type="password" placeholder="Ваш пароль">
+                            </div>
+                            <button type="button" class="btn btn-login" id="goToLoginPage">Войти</button>
+                        </form>
+                        <div class="dropdown-footer">
+                            <a href="#" class="forgot-password">Забыли пароль?</a>
+                            <a href="#" class="register-link" id="registerLink">Регистрация</a>
+                        </div>
+                    </div>
+                </div>
+                <i class="fas fa-shopping-bag"></i>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="page-banner">
+    <div class="page-banner-decor"></div>
+    <div class="container">
+        <p class="banner-subtitle">Идеальный подарок</p>
+        <h1>Подарочные сертификаты</h1>
+        <p class="banner-desc">Подарите радость выбора — пусть близкий сам выберет украшение своей мечты</p>
+    </div>
+</section>
+
+<main class="container">
+    <nav class="breadcrumb">
+        <a href="../index/index.html">Главная</a>
+        <i class="fas fa-chevron-right"></i>
+        <span>Сертификаты</span>
+    </nav>
+
+    <section class="how-it-works">
+        <h2 class="section-title">Как это работает</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-icon"><i class="fas fa-gift"></i></div>
+                <h3>Выберите номинал</h3>
+                <p>Выберите сумму сертификата и формат — цифровой или физический</p>
+            </div>
+            <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+            <div class="step">
+                <div class="step-icon"><i class="fas fa-credit-card"></i></div>
+                <h3>Оформите покупку</h3>
+                <p>Оплатите заказ удобным способом и укажите email получателя</p>
+            </div>
+            <div class="step-arrow"><i class="fas fa-chevron-right"></i></div>
+            <div class="step">
+                <div class="step-icon"><i class="fas fa-heart"></i></div>
+                <h3>Подарите радость</h3>
+                <p>Получатель выбирает любое украшение из каталога на сумму сертификата</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="cert-section">
+        <h2 class="section-title">Выберите номинал</h2>
+        <div class="cert-grid">
+
+            <div class="cert-card">
+                <div class="cert-visual">
+                    <span class="cert-logo">Miestilo</span>
+                    <span class="cert-amount">1 000 ₽</span>
+                    <span class="cert-label">Подарочный сертификат</span>
+                </div>
+                <div class="cert-body">
+                    <p>Идеально для небольшого подарка: серьги, браслет или кольцо из базовой линии LUNA.</p>
+                    <a href="#" class="btn cert-btn">Купить сертификат</a>
+                </div>
+            </div>
+
+            <div class="cert-card">
+                <div class="cert-visual cert-visual--md">
+                    <span class="cert-logo">Miestilo</span>
+                    <span class="cert-amount">2 000 ₽</span>
+                    <span class="cert-label">Подарочный сертификат</span>
+                </div>
+                <div class="cert-body">
+                    <p>Широкий выбор: серьги или кольца коллекций EROS и LUNA.</p>
+                    <a href="#" class="btn cert-btn">Купить сертификат</a>
+                </div>
+            </div>
+
+            <div class="cert-card cert-card--featured">
+                <div class="cert-badge">Популярный</div>
+                <div class="cert-visual cert-visual--lg">
+                    <span class="cert-logo">Miestilo</span>
+                    <span class="cert-amount">5 000 ₽</span>
+                    <span class="cert-label">Подарочный сертификат</span>
+                </div>
+                <div class="cert-body">
+                    <p>Почти весь каталог доступен: украшения коллекций EROS, LUNA и MAYA P.</p>
+                    <a href="#" class="btn cert-btn">Купить сертификат</a>
+                </div>
+            </div>
+
+            <div class="cert-card">
+                <div class="cert-visual cert-visual--xl">
+                    <span class="cert-logo">Miestilo</span>
+                    <span class="cert-amount">10 000 ₽</span>
+                    <span class="cert-label">Подарочный сертификат</span>
+                </div>
+                <div class="cert-body">
+                    <p>Роскошный подарок: колье, браслеты и украшения премиум-линий коллекции GALA и MAYA P.</p>
+                    <a href="#" class="btn cert-btn">Купить сертификат</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="cert-info">
+        <div class="cert-info-grid">
+            <div class="cert-info-card">
+                <i class="fas fa-envelope-open-text"></i>
+                <h3>Цифровой сертификат</h3>
+                <p>Отправляем на email мгновенно. Можно распечатать или использовать с телефона при оформлении заказа.</p>
+            </div>
+            <div class="cert-info-card">
+                <i class="fas fa-box-open"></i>
+                <h3>Физический сертификат</h3>
+                <p>Красивая карточка в фирменном конверте Miestilo. Доставка по России от 3 до 7 рабочих дней.</p>
+            </div>
+            <div class="cert-info-card">
+                <i class="fas fa-calendar-alt"></i>
+                <h3>Срок действия</h3>
+                <p>Сертификат действителен 12 месяцев с даты покупки. Использовать можно в один или несколько заказов.</p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Miestilo</h3>
+                <p>Интернет-магазин украшений для всей семьи</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-vk"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Категории</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Кольца</a></li>
+                    <li><a href="#">Серьги</a></li>
+                    <li><a href="#">Каффы</a></li>
+                    <li><a href="#">Браслеты</a></li>
+                    <li><a href="#">Колье</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Информация</h3>
+                <ul class="footer-links">
+                    <li><a href="#">О компании</a></li>
+                    <li><a href="#">Доставка и оплата</a></li>
+                    <li><a href="#">Возврат и обмен</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Контакты</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-phone"></i> 8 (800) 555-55-55</li>
+                    <li><i class="fas fa-envelope"></i> info@miestilo.ru</li>
+                    <li><i class="fas fa-map-marker-alt"></i> г. Санкт-Петербург</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright"><p>&copy; 2025 Miestilo.ru. Все права защищены.</p></div>
+    </div>
+</footer>
+
+<script src="../shared/nav.js"></script>
+</body>
+</html>

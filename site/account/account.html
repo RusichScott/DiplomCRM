@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой аккаунт - Miestilo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../account/account.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <a href="../index/index.html" class="logo">Mie<span>stilo</span></a>
+                
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                
+                <ul class="nav-links">
+                    <li><a href="../index/index.html">Главная</a></li>
+                    <li><a href="#">Коллекции</a></li>
+                    <li><a href="#">Образы</a></li>
+                    <li><a href="#">Сертификаты</a></li>
+                    <li><a href="#">Акции</a></li>
+                    <li><a href="#">Новинки</a></li>
+                </ul>
+                
+                <div class="header-icons">
+                    <i class="fas fa-search" id="searchBtn"></i>
+                    <a href="account.html" class="acc-hdr-icon active-icon" title="Мой аккаунт"><i class="fas fa-user"></i></a>
+                    <a href="account.html#wishlist" class="acc-hdr-icon" title="Избранное"><i class="fas fa-heart"></i></a>
+                    <span class="acc-hdr-icon" data-cart-trigger title="Корзина" style="cursor:pointer">
+                        <i class="fas fa-shopping-bag"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="account-container container">
+        <div class="account-header">
+            <h1>Мой аккаунт</h1>
+            <p>Управляйте вашими заказами, настройками и предпочтениями</p>
+        </div>
+        
+        <div class="account-content">
+            <!-- Sidebar -->
+            <div class="account-sidebar">
+                <div class="user-info">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-name" id="userName">Иван Иванов</div>
+                    <div class="user-email" id="userEmail">ivan@example.com</div>
+                </div>
+                
+                <ul class="sidebar-menu">
+                    <li><a href="#" class="active" data-tab="orders"><i class="fas fa-shopping-bag"></i> Мои заказы</a></li>
+                    <li><a href="#" data-tab="profile"><i class="fas fa-user-edit"></i> Профиль</a></li>
+                    <li><a href="#" data-tab="addresses"><i class="fas fa-map-marker-alt"></i> Адреса</a></li>
+                    <li><a href="#" data-tab="wishlist"><i class="fas fa-heart"></i> Избранное</a></li>
+                    <li><a href="#" data-tab="security"><i class="fas fa-shield-alt"></i> Безопасность</a></li>
+                    <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Выйти</a></li>
+                </ul>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="account-main">
+                <!-- Orders Tab -->
+                <div class="tab-content active" id="orders-tab">
+                    <div class="tab-header">
+                        <h2>Мои заказы</h2>
+                        <p>История ваших заказов и их статус</p>
+                    </div>
+                    <div class="orders-list" id="ordersContainer"></div>
+                </div>
+                
+                <!-- Profile Tab -->
+                <div class="tab-content" id="profile-tab">
+                    <div class="tab-header">
+                        <h2>Профиль</h2>
+                        <p>Управляйте вашими личными данными</p>
+                    </div>
+                    
+                    <form class="profile-form" id="profileForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="profileFirstName">Имя</label>
+                                <input type="text" id="profileFirstName" value="Иван" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="profileLastName">Фамилия</label>
+                                <input type="text" id="profileLastName" value="Иванов" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profileEmail">Email</label>
+                            <input type="email" id="profileEmail" value="ivan@example.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profilePhone">Телефон</label>
+                            <input type="tel" id="profilePhone" value="+7 (999) 123-45-67">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profileBirthday">Дата рождения</label>
+                            <input type="date" id="profileBirthday" value="1990-01-15">
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn">Сохранить изменения</button>
+                            <button type="button" class="btn btn-outline" id="cancelChanges">Отмена</button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Addresses Tab -->
+                <div class="tab-content" id="addresses-tab">
+                    <div class="tab-header">
+                        <h2>Адреса доставки</h2>
+                        <p>Адреса, добавленные в вашем профиле</p>
+                    </div>
+                    <button class="btn" id="addAddressBtn" style="margin-bottom:24px">
+                        <i class="fas fa-plus"></i> Добавить адрес
+                    </button>
+                    <div class="addresses-grid" id="addressesContainer"></div>
+                </div>
+
+                <!-- Wishlist Tab -->
+                <div class="tab-content" id="wishlist-tab">
+                    <div class="tab-header">
+                        <h2>Избранное</h2>
+                        <p>Товары, которые вам понравились</p>
+                    </div>
+                    <div class="wishlist-grid" id="wishlistContainer"></div>
+                </div>
+                
+                <!-- Security Tab -->
+                <div class="tab-content" id="security-tab">
+                    <div class="tab-header">
+                        <h2>Безопасность</h2>
+                        <p>Управление паролем и безопасностью аккаунта</p>
+                    </div>
+                    
+                    <form class="profile-form" id="securityForm">
+                        <div class="form-group">
+                            <label for="currentPassword">Текущий пароль</label>
+                            <input type="password" id="currentPassword" placeholder="Введите текущий пароль" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="newPassword">Новый пароль</label>
+                            <input type="password" id="newPassword" placeholder="Введите новый пароль" required minlength="6">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmNewPassword">Подтвердите новый пароль</label>
+                            <input type="password" id="confirmNewPassword" placeholder="Повторите новый пароль" required>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn">Изменить пароль</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Miestilo</h3>
+                    <p>Интернет-магазин украшений для всей семьи</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Категории</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Кольца</a></li>
+                        <li><a href="#">Серьги</a></li>
+                        <li><a href="#">Каффы</a></li>
+                        <li><a href="#">Браслеты</a></li>
+                        <li><a href="#">Колье</a></li>
+                        <li><a href="#">Уход и хранение</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Информация</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">О компании</a></li>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Возврат и обмен</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Политика конфиденциальности</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone"></i> 8 (800) 555-55-55</li>
+                        <li><i class="fas fa-envelope"></i> info@miestilo.ru</li>
+                        <li><i class="fas fa-map-marker-alt"></i> г.Санкт-Петербург, ул. Примерная, д. 52</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Miestilo.ru. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Address add modal -->
+    <div id="addrModalOverlay" style="
+        display:none; position:fixed; inset:0;
+        background:rgba(15,5,30,.6); backdrop-filter:blur(4px);
+        z-index:2000; align-items:center; justify-content:center;">
+        <div style="background:#fff; border-radius:20px; width:90%; max-width:460px;
+                    max-height:90vh; overflow-y:auto;
+                    box-shadow:0 24px 64px rgba(96,23,156,.22);">
+            <div style="display:flex; align-items:center; justify-content:space-between;
+                        padding:22px 28px; border-bottom:1px solid #ece5f5;
+                        position:sticky; top:0; background:#fff; z-index:1;">
+                <h3 style="font-family:'Cormorant Garamond',serif; font-size:22px;
+                            font-weight:600; color:#1e1b2e;">Новый адрес</h3>
+                <button id="addrModalClose" style="background:none; border:none;
+                    font-size:24px; color:#bbb; cursor:pointer;">&times;</button>
+            </div>
+            <form id="addrForm" style="padding:22px 28px; display:flex; flex-direction:column; gap:16px;">
+                <div class="form-group">
+                    <label for="aTitle">Название (например: Домашний)</label>
+                    <input type="text" id="aTitle" placeholder="Домашний">
+                </div>
+                <div class="form-group">
+                    <label for="aFullName">Имя получателя *</label>
+                    <input type="text" id="aFullName" placeholder="Иван Иванов" required>
+                </div>
+                <div class="form-group">
+                    <label for="aCity">Город *</label>
+                    <input type="text" id="aCity" placeholder="Санкт-Петербург" required>
+                </div>
+                <div class="form-group">
+                    <label for="aStreet">Улица, дом, квартира *</label>
+                    <input type="text" id="aStreet" placeholder="ул. Примерная, д. 1, кв. 10" required>
+                </div>
+                <div class="form-group">
+                    <label for="aPostal">Индекс</label>
+                    <input type="text" id="aPostal" placeholder="190000" maxlength="10">
+                </div>
+                <div class="form-group">
+                    <label for="aPhone">Телефон</label>
+                    <input type="tel" id="aPhone" placeholder="+7 (999) 123-45-67">
+                </div>
+                <label style="display:flex; align-items:center; gap:8px; font-size:14px;
+                               color:#555; cursor:pointer;">
+                    <input type="checkbox" id="aDefault"> Сделать основным
+                </label>
+                <div style="display:flex; flex-direction:column; gap:10px; margin-top:4px;">
+                    <button type="submit" class="btn" id="addrSubmitBtn">Сохранить адрес</button>
+                    <button type="button" id="addrCancelBtn"
+                        style="padding:13px; background:transparent; border:1px solid #ece5f5;
+                               border-radius:4px; font-size:14px; color:#999; cursor:pointer;
+                               transition:all .3s; font-family:'Inter',sans-serif;">
+                        Отмена
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        .acc-loading { color: #999; padding: 20px 0; font-size: 14px; }
+        .acc-empty   { color: #bbb; padding: 20px 0; font-size: 14px; }
+        .acc-toast {
+            position: fixed; bottom: 28px; left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: #1e1b2e; color: #fff;
+            padding: 12px 24px; border-radius: 10px;
+            font-size: 14px; font-weight: 500; z-index: 3000;
+            opacity: 0; transition: opacity .3s, transform .3s;
+            white-space: nowrap; pointer-events: none;
+            box-shadow: 0 8px 24px rgba(0,0,0,.2);
+        }
+        .acc-toast.show            { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .acc-toast.acc-toast-error { background: #c62828; }
+        .acc-toast.acc-toast-info  { background: #555; }
+        .acc-hdr-icon { font-size:18px; color:#555; text-decoration:none; transition:color .3s; }
+        .acc-hdr-icon:hover, .acc-hdr-icon.active-icon { color:#60179c; }
+    </style>
+    <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+    <script src="../shared/shop.js"></script>
+    <script src="../shared/cart.js"></script>
+    <script src="accScript.js"></script>

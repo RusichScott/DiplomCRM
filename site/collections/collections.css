@@ -1,0 +1,172 @@
+/* ── Page Banner ── */
+.page-banner {
+    background: linear-gradient(145deg, #3d0f63 0%, #60179c 55%, #8b35cc 100%);
+    color: white;
+    text-align: center;
+    padding: 80px 20px 72px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.page-banner-decor {
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 15% 50%, rgba(255,255,255,0.06) 0%, transparent 50%),
+        radial-gradient(circle at 85% 20%, rgba(255,255,255,0.05) 0%, transparent 40%);
+    pointer-events: none;
+}
+
+.banner-subtitle {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.65;
+    margin-bottom: 14px;
+}
+
+.page-banner h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    position: relative;
+}
+
+.banner-desc {
+    opacity: 0.82;
+    font-size: 16px;
+    font-weight: 300;
+    max-width: 480px;
+    margin: 0 auto;
+    line-height: 1.7;
+    position: relative;
+}
+
+/* ── Breadcrumb ── */
+.breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 20px 0 40px;
+    font-size: 13px;
+    color: #999;
+}
+
+.breadcrumb a {
+    color: #999;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.breadcrumb a:hover { color: var(--purple); }
+
+.breadcrumb i {
+    font-size: 9px;
+    color: #ccc;
+}
+
+/* ── Nav active ── */
+.nav-active {
+    color: var(--purple) !important;
+}
+
+.nav-active::after {
+    width: 100% !important;
+}
+
+/* ── Collections Grid ── */
+.collections-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+    padding-bottom: 80px;
+}
+
+.collection-card {
+    border-radius: 16px;
+    overflow: hidden;
+    background: white;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 22px rgba(96, 23, 156, 0.07);
+    transition: all 0.35s ease;
+}
+
+.collection-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 18px 44px rgba(96, 23, 156, 0.16);
+    border-color: rgba(96, 23, 156, 0.2);
+}
+
+.collection-img {
+    height: 320px;
+    background-size: cover;
+    background-position: center;
+    background-color: #ede4f7;
+    position: relative;
+    overflow: hidden;
+}
+
+.collection-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(30, 10, 50, 0.55) 0%, transparent 60%);
+    display: flex;
+    align-items: flex-end;
+    padding: 20px;
+}
+
+.collection-count {
+    color: white;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 5px 12px;
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+}
+
+.collection-body {
+    padding: 26px 28px 28px;
+}
+
+.collection-tag {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--purple);
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.collection-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.collection-desc {
+    color: var(--text-sec);
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 22px;
+}
+
+.collection-btn {
+    display: inline-block;
+    padding: 11px 28px;
+    font-size: 12px;
+}
+
+@media (max-width: 768px) {
+    .collections-grid { grid-template-columns: 1fr; gap: 24px; }
+    .page-banner h1   { font-size: 40px; }
+    .collection-img   { height: 240px; }
+}

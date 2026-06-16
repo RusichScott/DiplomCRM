@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Miestilo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-top">
+                <a href="#" class="logo">Mie<span>stilo</span></a>
+                
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+                
+                <ul class="nav-links">
+                    <li><a href="#">Главная</a></li>
+                    <li><a href="../collections/collections.html">Коллекции</a></li>
+                    <li><a href="../looks/looks.html">Образы</a></li>
+                    <li><a href="../certificates/certificates.html">Сертификаты</a></li>
+                    <li><a href="../sales/sales.html">Акции</a></li>
+                    <li><a href="../new/new.html">Новинки</a></li>
+                </ul>
+                
+                <div class="header-icons">
+                    <i class="fas fa-search" id="searchBtn"></i>
+                    <div class="account-dropdown" id="accountDropdownWrapper">
+                        <i class="fas fa-user" id="accountBtn"></i>
+                        <div class="dropdown-content" id="loginDropdown">
+                            <div class="dropdown-header">
+                                <h3>Вход в аккаунт</h3>
+                                <p>Войдите, чтобы получить доступ ко всем функциям</p>
+                            </div>
+                            <form id="loginForm">
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" id="email" placeholder="Ваш email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Пароль</label>
+                                    <input type="password" id="password" placeholder="Ваш пароль" required>
+                                </div>
+                                <button type="button" class="btn btn-login" id="goToLoginPage">Войти</button>
+                            </form>
+                            <div class="dropdown-footer">
+                                <a href="#" class="forgot-password">Забыли пароль?</a>
+                                <a href="#" class="register-link" id="registerLink">Регистрация</a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="../account/account.html#wishlist" class="hdr-icon-link" title="Избранное">
+                        <i class="fas fa-heart"></i>
+                    </a>
+                    <i class="fas fa-shopping-bag" data-cart-trigger style="cursor:pointer"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Новая коллекция осень-зима 2025</h1>
+            <p>Откройте для себя последние тенденции моды в нашем обновленном каталоге. Стильные украшения для каждого случая жизни.</p>
+            <a href="#" class="btn">Смотреть коллекцию</a>
+        </div>
+    </section>
+
+    <main class="container">
+        <section class="categories-section">
+            <h2 class="section-title">Категории товаров</h2>
+            <div class="categories">
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('');"></div>
+                    <div class="category-content">
+                        <h3 class="category-title">Кольца</h3>
+                        <p class="category-desc">Серебряные и золотые кольца с натуральными камнями</p>
+                        <a href="../catalog/catalog.html?slug=koltsa" class="btn" style="padding: 8px 20px; font-size: 14px;">Смотреть</a>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('');"></div>
+                    <div class="category-content">
+                        <h3 class="category-title">Серьги</h3>
+                        <p class="category-desc">Гвоздики, клаймберы, капли и серьги-кольца</p>
+                        <a href="../catalog/catalog.html?slug=sergi" class="btn" style="padding: 8px 20px; font-size: 14px;">Смотреть</a>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('');"></div>
+                    <div class="category-content">
+                        <h3 class="category-title">Каффы</h3>
+                        <p class="category-desc">Украшения без прокола для изысканного образа</p>
+                        <a href="../catalog/catalog.html?slug=kaffy" class="btn" style="padding: 8px 20px; font-size: 14px;">Смотреть</a>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('');"></div>
+                    <div class="category-content">
+                        <h3 class="category-title">Браслеты</h3>
+                        <p class="category-desc">Цепочки, жёсткие браслеты и браслеты с подвесками</p>
+                        <a href="../catalog/catalog.html?slug=braslety" class="btn" style="padding: 8px 20px; font-size: 14px;">Смотреть</a>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('');"></div>
+                    <div class="category-content">
+                        <h3 class="category-title">Колье</h3>
+                        <p class="category-desc">Чокеры, цепочки и многослойные колье</p>
+                        <a href="../catalog/catalog.html?slug=kole" class="btn" style="padding: 8px 20px; font-size: 14px;">Смотреть</a>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-img" style="background-image: url('');"></div>
+                    <div class="category-content">
+                        <h3 class="category-title">Уход и хранение</h3>
+                        <p class="category-desc">Всё для сохранения красоты ваших украшений</p>
+                        <a href="../catalog/catalog.html?slug=uhod" class="btn" style="padding: 8px 20px; font-size: 14px;">Смотреть</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="products-section">
+            <h2 class="section-title">Новинки и популярное</h2>
+            <div class="products" id="popularProducts">
+                <!-- загружается из БД через script.js -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Miestilo</h3>
+                    <p>Интернет-магазин украшений для всей семьи</p>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-vk"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Категории</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Кольца</a></li>
+                        <li><a href="#">Серьги</a></li>
+                        <li><a href="#">Каффы</a></li>
+                        <li><a href="#">Браслеты</a></li>
+                        <li><a href="#">Колье</a></li>
+                        <li><a href="#">Уход и хранение</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Информация</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">О компании</a></li>
+                        <li><a href="#">Доставка и оплата</a></li>
+                        <li><a href="#">Возврат и обмен</a></li>
+                        <li><a href="#">Контакты</a></li>
+                        <li><a href="#">Политика конфиденциальности</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Контакты</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-phone"></i> 8 (800) 555-55-55</li>
+                        <li><i class="fas fa-envelope"></i> info@miestilo.ru</li>
+                        <li><i class="fas fa-map-marker-alt"></i> г.Санкт-Петербург, ул. Примерная, д. 52</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 Miestilo.ru. Все права защищены.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../shared/shop.js"></script>
+    <script src="../shared/cart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

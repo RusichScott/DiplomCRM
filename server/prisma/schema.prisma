@@ -1,0 +1,147 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters", "partialIndexes"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model addresses {
+  id          Int      @id @default(autoincrement())
+  user_id     Int      @unique(map: "idx_addresses_default", where: raw("(is_default = true)"))
+  title       String   @default("Адрес") @db.VarChar(64)
+  full_name   String   @db.VarChar(128)
+  city        String   @db.VarChar(128)
+  street      String   @db.VarChar(255)
+  postal_code String?  @db.VarChar(10)
+  phone       String?  @db.VarChar(20)
+  is_default  Boolean  @default(false)
+  users       users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  orders      orders[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model cart_items {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  product_id Int
+  quantity   Int      @default(1) @db.SmallInt
+  added_at   DateTime @default(now()) @db.Timestamptz(6)
+  products   products @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users      users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([user_id, product_id])
+  @@index([user_id], map: "idx_cart_user")
+}
+
+model categories {
+  id         Int        @id @default(autoincrement())
+  name       String     @db.VarChar(64)
+  slug       String     @unique @db.VarChar(64)
+  image_url  String?
+  sort_order Int        @default(0) @db.SmallInt
+  products   products[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model order_items {
+  id           Int       @id @default(autoincrement())
+  order_id     Int
+  product_id   Int?
+  product_name String    @db.VarChar(255)
+  price        Decimal   @db.Decimal(10, 2)
+  quantity     Int       @db.SmallInt
+  orders       orders    @relation(fields: [order_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  products     products? @relation(fields: [product_id], references: [id], onUpdate: NoAction)
+
+  @@index([order_id], map: "idx_order_items_order")
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model orders {
+  id              Int           @id @default(autoincrement())
+  user_id         Int
+  address_id      Int?
+  status          order_status  @default(pending)
+  total_amount    Decimal       @db.Decimal(10, 2)
+  delivery_method String?       @db.VarChar(64)
+  delivery_cost   Decimal       @default(0) @db.Decimal(10, 2)
+  payment_method  String?       @db.VarChar(64)
+  comment         String?
+  created_at      DateTime      @default(now()) @db.Timestamptz(6)
+  order_items     order_items[]
+  addresses       addresses?    @relation(fields: [address_id], references: [id], onUpdate: NoAction)
+  users           users         @relation(fields: [user_id], references: [id], onUpdate: NoAction)
+
+  @@index([status], map: "idx_orders_status")
+  @@index([user_id], map: "idx_orders_user")
+}
+
+model product_images {
+  id         Int      @id @default(autoincrement())
+  product_id Int      @unique(map: "idx_product_images_primary", where: raw("(is_primary = true)"))
+  image_url  String
+  is_primary Boolean  @default(false)
+  sort_order Int      @default(0) @db.SmallInt
+  products   products @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model products {
+  id             Int             @id @default(autoincrement())
+  category_id    Int
+  name           String          @db.VarChar(255)
+  description    String?
+  price          Decimal         @db.Decimal(10, 2)
+  old_price      Decimal?        @db.Decimal(10, 2)
+  sku            String          @unique @db.VarChar(64)
+  stock          Int             @default(0)
+  is_active      Boolean         @default(true)
+  is_new         Boolean         @default(false)
+  created_at     DateTime        @default(now()) @db.Timestamptz(6)
+  cart_items     cart_items[]
+  order_items    order_items[]
+  product_images product_images?
+  categories     categories      @relation(fields: [category_id], references: [id], onUpdate: NoAction)
+  wishlist       wishlist[]
+
+  @@index([is_active], map: "idx_products_active")
+  @@index([category_id], map: "idx_products_category")
+}
+
+model users {
+  id            Int          @id @default(autoincrement())
+  first_name    String       @db.VarChar(64)
+  last_name     String       @db.VarChar(64)
+  email         String       @unique @db.VarChar(128)
+  password_hash String       @db.VarChar(255)
+  phone         String?      @db.VarChar(20)
+  birthday      DateTime?    @db.Date
+  created_at    DateTime     @default(now()) @db.Timestamptz(6)
+  updated_at    DateTime     @default(now()) @db.Timestamptz(6)
+  addresses     addresses?
+  cart_items    cart_items[]
+  orders        orders[]
+  wishlist      wishlist[]
+}
+
+model wishlist {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  product_id Int
+  added_at   DateTime @default(now()) @db.Timestamptz(6)
+  products   products @relation(fields: [product_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  users      users    @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+
+  @@unique([user_id, product_id])
+  @@index([user_id], map: "idx_wishlist_user")
+}
+
+enum order_status {
+  pending
+  processing
+  shipped
+  delivered
+  cancelled
+}

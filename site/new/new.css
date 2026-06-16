@@ -1,0 +1,75 @@
+/* ── Page Banner ── */
+.page-banner { background: linear-gradient(145deg, #3d0f63 0%, #60179c 55%, #8b35cc 100%); color: white; text-align: center; padding: 80px 20px 72px; position: relative; overflow: hidden; }
+.page-banner-decor { position: absolute; inset: 0; background: radial-gradient(circle at 15% 50%, rgba(255,255,255,0.06) 0%, transparent 50%), radial-gradient(circle at 85% 20%, rgba(255,255,255,0.05) 0%, transparent 40%); pointer-events: none; }
+.banner-subtitle { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; opacity: 0.65; margin-bottom: 14px; }
+.page-banner h1 { font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 600; letter-spacing: 1px; margin-bottom: 14px; }
+.banner-desc { opacity: 0.82; font-size: 16px; font-weight: 300; max-width: 480px; margin: 0 auto; line-height: 1.7; }
+.breadcrumb { display: flex; align-items: center; gap: 8px; padding: 20px 0 36px; font-size: 13px; color: #999; }
+.breadcrumb a { color: #999; text-decoration: none; }
+.breadcrumb a:hover { color: var(--purple); }
+.breadcrumb i { font-size: 9px; color: #ccc; }
+.nav-active { color: var(--purple) !important; }
+.nav-active::after { width: 100% !important; }
+
+/* ── Filters ── */
+.new-filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 36px;
+}
+
+.filter-btn {
+    padding: 9px 20px;
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    background: white;
+    color: var(--text-sec);
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.filter-btn:hover {
+    border-color: rgba(96, 23, 156, 0.3);
+    color: var(--purple);
+}
+
+.filter-btn.active {
+    background: linear-gradient(135deg, var(--purple-light), var(--purple-dark));
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 14px rgba(96, 23, 156, 0.3);
+}
+
+/* ── New Products Grid ── */
+.new-products {
+    margin-bottom: 80px;
+}
+
+/* Reuse .products from index/style.css — just add the NEW badge */
+.product-card {
+    position: relative;
+}
+
+.new-badge {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    z-index: 2;
+    background: linear-gradient(135deg, var(--purple-light), var(--purple-dark));
+    color: white;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(96, 23, 156, 0.4);
+}
+
+@media (max-width: 600px) {
+    .page-banner h1 { font-size: 38px; }
+}

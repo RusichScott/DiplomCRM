@@ -1,0 +1,248 @@
+/* ── Page Banner ── */
+.page-banner { background: linear-gradient(145deg, #3d0f63 0%, #60179c 55%, #8b35cc 100%); color: white; text-align: center; padding: 80px 20px 72px; position: relative; overflow: hidden; }
+.page-banner-decor { position: absolute; inset: 0; background: radial-gradient(circle at 15% 50%, rgba(255,255,255,0.06) 0%, transparent 50%), radial-gradient(circle at 85% 20%, rgba(255,255,255,0.05) 0%, transparent 40%); pointer-events: none; }
+.banner-subtitle { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; opacity: 0.65; margin-bottom: 14px; }
+.page-banner h1 { font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 600; letter-spacing: 1px; margin-bottom: 14px; }
+.banner-desc { opacity: 0.82; font-size: 16px; font-weight: 300; max-width: 480px; margin: 0 auto; line-height: 1.7; }
+.breadcrumb { display: flex; align-items: center; gap: 8px; padding: 20px 0 40px; font-size: 13px; color: #999; }
+.breadcrumb a { color: #999; text-decoration: none; }
+.breadcrumb a:hover { color: var(--purple); }
+.breadcrumb i { font-size: 9px; color: #ccc; }
+.nav-active { color: var(--purple) !important; }
+.nav-active::after { width: 100% !important; }
+
+/* ── Promo Banner ── */
+.promo-banner {
+    background: linear-gradient(135deg, #2d0a4a, #7020b8);
+    border-radius: 20px;
+    padding: 44px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    margin-bottom: 60px;
+    color: white;
+    overflow: hidden;
+    position: relative;
+}
+
+.promo-banner::before {
+    content: '';
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.05);
+    top: -80px;
+    right: 160px;
+}
+
+.promo-banner-content { position: relative; z-index: 1; }
+
+.promo-tag {
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.4);
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+    opacity: 0.85;
+}
+
+.promo-banner h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.promo-banner p {
+    opacity: 0.8;
+    font-size: 15px;
+    font-weight: 300;
+    margin-bottom: 24px;
+    max-width: 440px;
+}
+
+.promo-code-block {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.promo-code {
+    background: rgba(255,255,255,0.12);
+    border: 1px dashed rgba(255,255,255,0.5);
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.promo-copy-btn {
+    background: white;
+    color: var(--purple-dark);
+    border: none;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.promo-copy-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+}
+
+.promo-banner-img {
+    font-size: 100px;
+    opacity: 0.12;
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0;
+}
+
+/* ── Sales Grid ── */
+.sales-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 28px;
+    padding-bottom: 80px;
+}
+
+.sale-card {
+    border-radius: 16px;
+    overflow: hidden;
+    background: white;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 22px rgba(96, 23, 156, 0.07);
+    transition: all 0.3s;
+}
+
+.sale-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(96, 23, 156, 0.14);
+}
+
+.sale-card--wide { display: flex; }
+
+.sale-card-img {
+    width: 220px;
+    flex-shrink: 0;
+    background-size: cover;
+    background-position: center;
+    background-color: #ede4f7;
+}
+
+.sale-card-body {
+    padding: 28px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+}
+
+.sale-card-body--solo {
+    padding: 36px 32px;
+    text-align: center;
+    align-items: center;
+    gap: 12px;
+}
+
+.sale-icon {
+    width: 58px;
+    height: 58px;
+    background: var(--bg);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+    margin-bottom: 4px;
+}
+
+.sale-icon i { font-size: 22px; color: var(--purple); }
+
+.sale-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--purple-light), var(--purple-dark));
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 20px;
+    width: fit-content;
+}
+
+.sale-badge--green  { background: linear-gradient(135deg, #27ae60, #1e8449); }
+.sale-badge--purple { background: linear-gradient(135deg, #8b35cc, #3d0f63); }
+
+.sale-card-body h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+}
+
+.sale-card-body p {
+    font-size: 13px;
+    color: var(--text-sec);
+    line-height: 1.6;
+}
+
+.sale-condition {
+    font-size: 12px !important;
+    color: var(--text-muted) !important;
+    font-style: italic;
+}
+
+.sale-timer {
+    display: flex;
+    gap: 12px;
+    margin: 6px 0;
+}
+
+.timer-block {
+    text-align: center;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    min-width: 60px;
+}
+
+.timer-block span {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--purple);
+    line-height: 1;
+}
+
+.timer-block small {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 900px) {
+    .sales-grid { grid-template-columns: 1fr; }
+    .sale-card--wide { flex-direction: column; }
+    .sale-card-img { width: 100%; height: 200px; }
+    .promo-banner { flex-direction: column; padding: 32px 24px; }
+    .promo-banner h2 { font-size: 28px; }
+    .page-banner h1 { font-size: 40px; }
+}

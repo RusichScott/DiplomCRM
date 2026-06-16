@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Акции — Miestilo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../index/style.css">
+    <link rel="stylesheet" href="sales.css">
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="header-top">
+            <a href="../index/index.html" class="logo">Mie<span>stilo</span></a>
+            <div class="mobile-menu-btn"><i class="fas fa-bars"></i></div>
+            <ul class="nav-links">
+                <li><a href="../index/index.html">Главная</a></li>
+                <li><a href="../collections/collections.html">Коллекции</a></li>
+                <li><a href="../looks/looks.html">Образы</a></li>
+                <li><a href="../certificates/certificates.html">Сертификаты</a></li>
+                <li><a href="../sales/sales.html" class="nav-active">Акции</a></li>
+                <li><a href="../new/new.html">Новинки</a></li>
+            </ul>
+            <div class="header-icons">
+                <i class="fas fa-search"></i>
+                <div class="account-dropdown">
+                    <i class="fas fa-user" id="accountBtn"></i>
+                    <div class="dropdown-content" id="loginDropdown">
+                        <div class="dropdown-header">
+                            <h3>Вход в аккаунт</h3>
+                            <p>Войдите, чтобы получить доступ ко всем функциям</p>
+                        </div>
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" placeholder="Ваш email">
+                            </div>
+                            <div class="form-group">
+                                <label>Пароль</label>
+                                <input type="password" placeholder="Ваш пароль">
+                            </div>
+                            <button type="button" class="btn btn-login" id="goToLoginPage">Войти</button>
+                        </form>
+                        <div class="dropdown-footer">
+                            <a href="#" class="forgot-password">Забыли пароль?</a>
+                            <a href="#" class="register-link" id="registerLink">Регистрация</a>
+                        </div>
+                    </div>
+                </div>
+                <i class="fas fa-shopping-bag"></i>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="page-banner">
+    <div class="page-banner-decor"></div>
+    <div class="container">
+        <p class="banner-subtitle">Специальные предложения</p>
+        <h1>Акции</h1>
+        <p class="banner-desc">Выгодные предложения для наших покупателей</p>
+    </div>
+</section>
+
+<main class="container">
+    <nav class="breadcrumb">
+        <a href="../index/index.html">Главная</a>
+        <i class="fas fa-chevron-right"></i>
+        <span>Акции</span>
+    </nav>
+
+    <!-- Промокод для новых -->
+    <div class="promo-banner">
+        <div class="promo-banner-content">
+            <div class="promo-tag">Для новых покупателей</div>
+            <h2>Скидка 20% на первый заказ</h2>
+            <p>Зарегистрируйтесь и получите промокод на скидку 20% на любое украшение из каталога</p>
+            <div class="promo-code-block">
+                <span class="promo-code" id="promoCode">NEW20</span>
+                <button class="promo-copy-btn" id="copyBtn">
+                    <i class="fas fa-copy"></i> Скопировать
+                </button>
+            </div>
+        </div>
+        <div class="promo-banner-img">
+            <i class="fas fa-percentage"></i>
+        </div>
+    </div>
+
+    <h2 class="section-title">Текущие акции</h2>
+
+    <div class="sales-grid">
+
+        <div class="sale-card sale-card--wide">
+            <div class="sale-card-img" style="background-image: url('https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?w=800&auto=format&fit=crop');"></div>
+            <div class="sale-card-body">
+                <span class="sale-badge">−15%</span>
+                <h3>Скидка на все серьги</h3>
+                <p>Весь ассортимент серёг коллекций EROS и LUNA со скидкой 15%. Успейте выбрать любимую пару.</p>
+                <div class="sale-timer" id="timer1">
+                    <div class="timer-block"><span id="d1">05</span><small>дней</small></div>
+                    <div class="timer-block"><span id="h1">12</span><small>часов</small></div>
+                    <div class="timer-block"><span id="m1">30</span><small>минут</small></div>
+                </div>
+                <a href="#" class="btn">Перейти к серьгам</a>
+            </div>
+        </div>
+
+        <div class="sale-card">
+            <div class="sale-card-body sale-card-body--solo">
+                <div class="sale-icon"><i class="fas fa-truck"></i></div>
+                <span class="sale-badge sale-badge--green">Бесплатно</span>
+                <h3>Бесплатная доставка</h3>
+                <p>При заказе от 3 000 ₽ доставка по всей России бесплатно. Срок — 3–7 рабочих дней.</p>
+                <p class="sale-condition">Действует постоянно</p>
+                <a href="../index/index.html" class="btn">В каталог</a>
+            </div>
+        </div>
+
+        <div class="sale-card">
+            <div class="sale-card-body sale-card-body--solo">
+                <div class="sale-icon"><i class="fas fa-gift"></i></div>
+                <span class="sale-badge sale-badge--purple">Подарок</span>
+                <h3>Подарок от 5 000 ₽</h3>
+                <p>При покупке на сумму от 5 000 ₽ — фирменный мешочек Miestilo для хранения украшений в подарок.</p>
+                <p class="sale-condition">Действует постоянно</p>
+                <a href="../index/index.html" class="btn">В каталог</a>
+            </div>
+        </div>
+
+        <div class="sale-card sale-card--wide">
+            <div class="sale-card-img" style="background-image: url('https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&auto=format&fit=crop');"></div>
+            <div class="sale-card-body">
+                <span class="sale-badge">−20%</span>
+                <h3>Летняя распродажа EROS</h3>
+                <p>Скидка 20% на все украшения коллекции EROS: кольца, серьги и каффы с натуральными гранатами.</p>
+                <div class="sale-timer" id="timer2">
+                    <div class="timer-block"><span id="d2">12</span><small>дней</small></div>
+                    <div class="timer-block"><span id="h2">08</span><small>часов</small></div>
+                    <div class="timer-block"><span id="m2">45</span><small>минут</small></div>
+                </div>
+                <a href="../collections/collections.html" class="btn">Перейти к EROS</a>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Miestilo</h3>
+                <p>Интернет-магазин украшений для всей семьи</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-vk"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Категории</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Кольца</a></li>
+                    <li><a href="#">Серьги</a></li>
+                    <li><a href="#">Каффы</a></li>
+                    <li><a href="#">Браслеты</a></li>
+                    <li><a href="#">Колье</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Информация</h3>
+                <ul class="footer-links">
+                    <li><a href="#">О компании</a></li>
+                    <li><a href="#">Доставка и оплата</a></li>
+                    <li><a href="#">Возврат и обмен</a></li>
+                    <li><a href="#">Контакты</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Контакты</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-phone"></i> 8 (800) 555-55-55</li>
+                    <li><i class="fas fa-envelope"></i> info@miestilo.ru</li>
+                    <li><i class="fas fa-map-marker-alt"></i> г. Санкт-Петербург</li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright"><p>&copy; 2025 Miestilo.ru. Все права защищены.</p></div>
+    </div>
+</footer>
+
+<script src="../shared/nav.js"></script>
+<script>
+document.getElementById('copyBtn').addEventListener('click', function() {
+    navigator.clipboard.writeText('NEW20').then(() => {
+        this.innerHTML = '<i class="fas fa-check"></i> Скопировано!';
+        setTimeout(() => { this.innerHTML = '<i class="fas fa-copy"></i> Скопировать'; }, 2000);
+    });
+});
+</script>
+</body>
+</html>
