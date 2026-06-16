@@ -37,7 +37,7 @@ fastify.register(require('./routes/addresses'), { prefix: '/addresses' });
 
 const start = async () => {
     try {
-        await fastify.listen({ port: Number(process.env.PORT) || 3000, host: '127.0.0.1' });
+        await fastify.listen({ port: Number(process.env.PORT) || 3000, host: '0.0.0.0' });
         console.log('Server running at http://127.0.0.1:3000');
     } catch (err) {
         fastify.log.error(err);
