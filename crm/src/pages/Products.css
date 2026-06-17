@@ -424,9 +424,16 @@
     .prod-table-wrap {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        width: 100%;
     }
-    .prod-table { min-width: 560px; }
+
+    /* Hide Артикул (3rd) and Статус (6th) columns */
+    .prod-table thead th:nth-child(3),
+    .prod-table thead th:nth-child(6),
+    .prod-table .prod-sku,
+    .prod-table .prod-status { display: none; }
+
+    .prod-table th,
+    .prod-table td { padding: 10px 12px; }
 
     .prod-form-row { grid-template-columns: 1fr; }
 }

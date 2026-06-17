@@ -223,9 +223,16 @@
     .cust-table-wrap {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        width: 100%;
     }
-    .cust-table { min-width: 580px; }
+
+    /* Hide low-priority columns: Потрачено (5th) and Последний заказ (6th) */
+    .cust-table thead th:nth-child(5),
+    .cust-table thead th:nth-child(6),
+    .cust-table .cust-sum,
+    .cust-row td:nth-child(6) { display: none; }
+
+    .cust-table thead th,
+    .cust-row td { padding: 10px 12px; }
 
     .cust-toolbar { flex-wrap: wrap; }
 }

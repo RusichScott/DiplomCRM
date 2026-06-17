@@ -317,9 +317,14 @@
     .oh-table-wrap {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-        width: 100%;
     }
-    .oh-table { min-width: 540px; }
+
+    /* Hide Дата и время (3rd) column */
+    .oh-table thead th:nth-child(3),
+    .oh-date-cell { display: none; }
+
+    .oh-table th,
+    .oh-table td { padding: 10px 12px; }
 
     .oh-detail { flex-direction: column; gap: 24px; padding: 16px 16px 20px; }
     .oh-meta { min-width: unset; }
