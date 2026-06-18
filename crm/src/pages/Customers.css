@@ -225,7 +225,7 @@
         -webkit-overflow-scrolling: touch;
     }
 
-    /* Hide low-priority columns: Потрачено (5th) and Последний заказ (6th) */
+    /* Скрываем Потрачено и Последний заказ */
     .cust-table thead th:nth-child(5),
     .cust-table thead th:nth-child(6),
     .cust-table .cust-sum,
@@ -235,4 +235,56 @@
     .cust-row td { padding: 10px 12px; }
 
     .cust-toolbar { flex-wrap: wrap; }
+}
+
+/* ── Card layout on small phones ── */
+@media (max-width: 480px) {
+    .cust-toolbar { gap: 10px; }
+    .cust-search-wrap { min-width: 0; }
+
+    .cust-table-wrap {
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        overflow-x: unset;
+    }
+
+    .cust-table,
+    .cust-table tbody { display: block; width: 100%; }
+
+    .cust-table thead { display: none; }
+
+    .cust-row {
+        display: block;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        margin-bottom: 10px;
+        overflow: hidden;
+        transition: box-shadow 0.2s;
+    }
+    .cust-row:hover { box-shadow: 0 4px 16px rgba(168,85,247,0.1); }
+    .cust-row:hover td { background: transparent; }
+
+    .cust-row td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--border);
+        border-radius: 0;
+    }
+    .cust-row td:last-child { border-bottom: none; }
+
+    /* Показываем скрытые ранее колонки в карточном виде */
+    .cust-table .cust-sum,
+    .cust-row td:nth-child(6) { display: flex !important; }
+
+    .cust-cell { gap: 10px; }
+    .cust-avatar { width: 32px; height: 32px; font-size: 11px; }
+
+    /* Телефон занимает всю ширину строки */
+    .cust-phone::before { content: '📞 '; }
+
+    .cust-no-results { padding: 32px 16px !important; }
 }

@@ -110,7 +110,8 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 20px;
-    overflow: hidden;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .oh-table {
@@ -314,18 +315,50 @@
 
 /* ── Mobile responsive ── */
 @media (max-width: 768px) {
-    .oh-table-wrap {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
+    .oh-toolbar { gap: 8px; }
 
-    /* Hide Дата и время (3rd) column */
+    /* Убираем min-width у поиска чтобы не переполнял контейнер */
+    .oh-search-wrap { min-width: 0; }
+
+    /* Дата и время (3-я колонка) прячем */
     .oh-table thead th:nth-child(3),
     .oh-date-cell { display: none; }
 
     .oh-table th,
     .oh-table td { padding: 10px 12px; }
 
-    .oh-detail { flex-direction: column; gap: 24px; padding: 16px 16px 20px; }
-    .oh-meta { min-width: unset; }
+    /* Детальная строка */
+    .oh-detail { flex-direction: column; gap: 20px; padding: 14px 14px 18px; }
+    .oh-meta   { min-width: unset; }
+}
+
+@media (max-width: 540px) {
+    /* Фильтр статуса и даты — на отдельную строку, полная ширина */
+    .oh-toolbar { flex-direction: column; align-items: stretch; }
+
+    .oh-search-wrap { min-width: 0; }
+    .oh-filter { width: 100%; }
+
+    .oh-date-wrap { width: 100%; justify-content: space-between; }
+    .oh-date      { flex: 1; min-width: 0; }
+
+    .oh-count { text-align: right; }
+
+    /* На мобиле скрываем ещё Клиент → email, оставляем только имя */
+    .oh-client-email { display: none; }
+
+    .oh-table th,
+    .oh-table td { padding: 9px 10px; font-size: 13px; }
+
+    /* Детальная строка */
+    .oh-detail { padding: 12px 12px 16px; gap: 16px; }
+    .oh-item-price { min-width: 70px; }
+}
+
+@media (max-width: 400px) {
+    /* Скрываем ещё колонку Итог (5-я) */
+    .oh-table thead th:nth-child(5),
+    .oh-total { display: none; }
+
+    .oh-table-wrap { border-radius: 12px; }
 }

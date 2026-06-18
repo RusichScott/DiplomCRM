@@ -24,12 +24,66 @@ mobileMenuBtn.addEventListener('click', () => {
             });
         });
         
-        const searchBtn = document.getElementById('searchBtn');
+        // ── Search overlay ──────────────────────────────────────────────────────
+        const CATEGORIES = [
+            { name: 'Кольца',          slug: 'koltsa',   icon: 'fa-ring'        },
+            { name: 'Серьги',          slug: 'sergi',    icon: 'fa-gem'         },
+            { name: 'Каффы',           slug: 'kaffy',    icon: 'fa-ear-listen'  },
+            { name: 'Браслеты',        slug: 'braslety', icon: 'fa-link'        },
+            { name: 'Колье',           slug: 'kole',     icon: 'fa-circle-dot'  },
+            { name: 'Уход и хранение', slug: 'uhod',     icon: 'fa-box'         },
+        ];
+
+        const searchBtn   = document.getElementById('searchBtn');
+        const overlay     = document.getElementById('searchOverlay');
+        const searchInput = document.getElementById('searchInput');
+        const suggestions = document.getElementById('searchSuggestions');
+        const closeBtn    = document.getElementById('searchClose');
+
         searchBtn.addEventListener('click', () => {
-            const query = prompt('Введите поисковый запрос:');
-            if (query) {
-                alert(`Поиск: ${query}\n(Функция поиска в разработке)`);
+            overlay.classList.add('active');
+            setTimeout(() => searchInput.focus(), 40);
+        });
+
+        closeBtn.addEventListener('click', closeSearch);
+        overlay.addEventListener('click', e => { if (e.target === overlay) closeSearch(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeSearch(); });
+
+        function closeSearch() {
+            overlay.classList.remove('active');
+            searchInput.value = '';
+            suggestions.innerHTML = '';
+            suggestions.classList.remove('has-results');
+        }
+
+        searchInput.addEventListener('input', () => {
+            const q = searchInput.value.trim().toLowerCase();
+            suggestions.innerHTML = '';
+
+            if (!q) {
+                suggestions.classList.remove('has-results');
+                return;
             }
+
+            const matches = CATEGORIES.filter(c => c.name.toLowerCase().includes(q));
+
+            if (!matches.length) {
+                const li = document.createElement('li');
+                li.className = 'search-no-results';
+                li.textContent = 'Ничего не найдено';
+                suggestions.appendChild(li);
+            } else {
+                matches.forEach(cat => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<i class="fas ${cat.icon}"></i>${cat.name}`;
+                    li.addEventListener('click', () => {
+                        window.location.href = `../catalog/catalog.html?slug=${cat.slug}`;
+                    });
+                    suggestions.appendChild(li);
+                });
+            }
+
+            suggestions.classList.add('has-results');
         });
         
         const observerOptions = {
@@ -57,7 +111,7 @@ mobileMenuBtn.addEventListener('click', () => {
 async function loadPopularProducts() {
     const grid = document.getElementById('popularProducts');
     try {
-        const res = await fetch('http://127.0.0.1:3000/products?limit=4');
+        const res = await fetch(`${API}/products?limit=4`);
         if (!res.ok) throw new Error();
         const products = await res.json();
 

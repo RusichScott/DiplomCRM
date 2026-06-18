@@ -1,4 +1,4 @@
-const API = 'https://diplomcrm-production.up.railway.app';
+const API = 'http://localhost:3000';
 
 // ── Shared styles (modal + toast) — injected so any page using shop.js gets them ──
 (function injectShopStyles() {

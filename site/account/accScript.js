@@ -79,17 +79,19 @@ async function loadOrders() {
                 </span>
             </div>
             <div class="order-items">
-                ${(o.order_items || []).map(item => `
+                ${(o.order_items || []).map(item => {
+                    const imgUrl = item.products?.product_images?.image_url || '';
+                    return `
                     <div class="order-item">
-                        <div class="item-img"></div>
+                        <div class="item-img"${imgUrl ? ` style="background-image:url('${imgUrl}')"` : ''}></div>
                         <div class="item-details">
                             <div class="item-name">${item.product_name}</div>
                             <div class="item-price">
                                 ${Number(item.price).toLocaleString('ru-RU')} ₽ × ${item.quantity}
                             </div>
                         </div>
-                    </div>
-                `).join('')}
+                    </div>`;
+                }).join('')}
             </div>
             <div class="order-footer">
                 <div class="order-total">Итого: ${Number(o.total_amount).toLocaleString('ru-RU')} ₽</div>
@@ -109,11 +111,12 @@ async function loadWishlist() {
     if (!items.length) { c.innerHTML = '<p class="acc-empty">В избранном пока нет товаров</p>'; return; }
 
     c.innerHTML = items.map(i => {
-        const p    = i.products;
-        const name = p.name.replace(/'/g, '&#39;');
+        const p      = i.products;
+        const name   = p.name.replace(/'/g, '&#39;');
+        const imgUrl = p.product_images?.image_url || '';
         return `
             <div class="wishlist-item" id="wish-${p.id}">
-                <div class="wishlist-img"></div>
+                <div class="wishlist-img"${imgUrl ? ` style="background-image:url('${imgUrl}')"` : ''}></div>
                 <div class="wishlist-details">
                     <div class="wishlist-name">${p.name}</div>
                     <div class="wishlist-price">${Number(p.price).toLocaleString('ru-RU')} ₽</div>

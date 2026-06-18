@@ -1,4 +1,4 @@
-const API = 'https://diplomcrm-production.up.railway.app';
+const API = 'http://localhost:3000';
 
 const togglePassword = document.getElementById('togglePassword');
 const passwordInput  = document.getElementById('password');

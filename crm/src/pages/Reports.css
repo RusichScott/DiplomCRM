@@ -1,0 +1,517 @@
+/* ── Controls ── */
+.rep-controls {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.rep-quick-ranges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.rep-quick-btn {
+    padding: 6px 14px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.18s;
+}
+.rep-quick-btn:hover {
+    border-color: var(--purple-light);
+    color: var(--purple-light);
+    background: rgba(168, 85, 247, 0.07);
+}
+
+.rep-quick-btn--active {
+    background: var(--gradient);
+    border-color: transparent;
+    color: #fff;
+    box-shadow: 0 3px 10px rgba(124, 58, 237, 0.35);
+}
+
+.rep-quick-btn--active:hover {
+    background: var(--gradient);
+    border-color: transparent;
+    color: #fff;
+    opacity: 0.9;
+}
+
+.rep-date-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.rep-date-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.rep-date-group label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+.rep-date-group input[type="date"] {
+    height: 40px;
+    padding: 0 12px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    outline: none;
+    transition: border-color 0.2s;
+    min-width: 0;
+    width: 100%;
+}
+.rep-date-group input[type="date"]:focus { border-color: var(--purple-light); }
+
+.rep-date-sep {
+    color: var(--text-muted);
+    padding-bottom: 10px;
+    font-size: 16px;
+}
+
+.rep-generate-btn {
+    height: 40px;
+    padding: 0 22px;
+    background: var(--gradient);
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: opacity 0.2s, transform 0.2s;
+    box-shadow: 0 4px 14px rgba(168, 85, 247, 0.3);
+    margin-left: auto;
+}
+.rep-generate-btn:hover:not(:disabled) {
+    opacity: 0.92;
+    transform: translateY(-1px);
+}
+.rep-generate-btn:disabled { opacity: 0.55; cursor: default; }
+
+/* ── Spinner ── */
+.rep-spinner {
+    width: 14px; height: 14px;
+    border: 2px solid rgba(255,255,255,0.4);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: rep-spin 0.7s linear infinite;
+    flex-shrink: 0;
+}
+.rep-spinner-lg {
+    width: 40px; height: 40px;
+    border: 3px solid var(--border);
+    border-top-color: var(--purple-light);
+    border-radius: 50%;
+    animation: rep-spin 0.7s linear infinite;
+}
+@keyframes rep-spin { to { transform: rotate(360deg); } }
+
+.rep-loading {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 16px; padding: 80px 0;
+    color: var(--text-muted); font-size: 14px;
+}
+
+.rep-error {
+    display: flex; align-items: center; gap: 10px;
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 12px; padding: 14px 18px;
+    color: #f87171; font-size: 13.5px;
+    margin-bottom: 16px;
+}
+
+/* ── Print button ── */
+.rep-print-btn {
+    display: flex; align-items: center; gap: 8px;
+    padding: 9px 18px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    align-self: flex-start;
+}
+.rep-print-btn:hover { border-color: var(--purple-light); color: var(--purple-light); }
+
+/* ── Report body ── */
+.rep-report {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 28px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.rep-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border);
+}
+
+.rep-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.rep-subtitle {
+    font-size: 13.5px;
+    color: var(--text-muted);
+}
+
+.rep-generated {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-align: right;
+    flex-shrink: 0;
+}
+
+/* ── Summary cards ── */
+.rep-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+}
+
+.rep-card {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 18px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.rep-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 14px 14px 0 0;
+}
+.rep-card-total::before   { background: #7c3aed; }
+.rep-card-revenue::before { background: #10b981; }
+.rep-card-avg::before     { background: #f59e0b; }
+.rep-card-items::before   { background: #3b82f6; }
+
+.rep-card-label {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 10px;
+}
+
+.rep-card-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+}
+
+.rep-card-value-lg {
+    font-size: 22px;
+}
+
+.rep-card-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+}
+
+/* ── Sections ── */
+.rep-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.rep-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+
+.rep-no-data {
+    color: var(--text-muted);
+    font-size: 13.5px;
+    text-align: center;
+    padding: 24px 0;
+}
+
+/* ── Status chips ── */
+.rep-status-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.rep-status-chip {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 7px 14px;
+}
+
+.rep-status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--chip-color, #888);
+    flex-shrink: 0;
+}
+
+.rep-status-label {
+    font-size: 13px;
+    color: var(--text);
+    font-weight: 500;
+}
+
+.rep-status-count {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--chip-color, #888);
+    background: color-mix(in srgb, var(--chip-color, #888) 12%, transparent);
+    border-radius: 10px;
+    padding: 1px 8px;
+    min-width: 24px;
+    text-align: center;
+}
+
+/* ── Tables ── */
+.rep-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    max-width: 100%;
+}
+
+.rep-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13.5px;
+}
+
+.rep-table thead th {
+    padding: 11px 16px;
+    background: var(--surface-2);
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.rep-table tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.15s;
+}
+.rep-table tbody tr:last-child { border-bottom: none; }
+.rep-table tbody tr:hover { background: rgba(168, 85, 247, 0.03); }
+
+.rep-table td {
+    padding: 12px 16px;
+    color: var(--text);
+    vertical-align: middle;
+}
+
+.rep-table tfoot .rep-tfoot td {
+    padding: 12px 16px;
+    background: var(--surface-2);
+    font-weight: 700;
+    color: var(--text);
+    border-top: 2px solid var(--border);
+}
+
+.rep-num {
+    text-align: right !important;
+}
+
+.rep-row-num {
+    color: var(--text-muted);
+    font-size: 12px;
+    width: 36px;
+    text-align: center !important;
+}
+
+.rep-cat-name {
+    font-weight: 600;
+}
+
+.rep-product-name {
+    font-weight: 500;
+    max-width: 280px;
+}
+
+.rep-revenue {
+    font-weight: 600;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.rep-qty-badge {
+    display: inline-block;
+    background: rgba(168, 85, 247, 0.12);
+    color: var(--purple-light);
+    border-radius: 8px;
+    padding: 3px 10px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.rep-cat-badge {
+    display: inline-block;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    border-radius: 8px;
+    padding: 3px 10px;
+    font-size: 11.5px;
+}
+
+.rep-product-cat {
+    white-space: nowrap;
+}
+
+/* ── Progress bar in category table ── */
+.rep-pct {
+    min-width: 120px;
+}
+
+.rep-bar-wrap {
+    height: 4px;
+    background: var(--border);
+    border-radius: 4px;
+    margin-top: 6px;
+    overflow: hidden;
+}
+
+.rep-bar {
+    height: 100%;
+    background: var(--gradient);
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+
+/* ── Print styles ── */
+@media print {
+    body * { visibility: hidden; }
+    #printable-report, #printable-report * { visibility: visible; }
+    #printable-report {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%;
+        background: #fff !important;
+        color: #000 !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 20px !important;
+    }
+    .rep-bar { background: #7c3aed !important; }
+    .rep-revenue { -webkit-text-fill-color: #7c3aed !important; }
+    .rep-card-value { color: #000 !important; }
+    .rep-print-btn { display: none !important; }
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+    .rep-summary { grid-template-columns: repeat(2, 1fr); }
+    .rep-report  { padding: 20px 20px; gap: 24px; }
+}
+
+@media (max-width: 640px) {
+    .rep-controls { padding: 14px 14px; }
+    .rep-quick-ranges { gap: 6px; }
+    .rep-quick-btn { font-size: 11px; padding: 5px 10px; }
+
+    .rep-date-row   { flex-direction: column; align-items: stretch; gap: 10px; }
+    .rep-date-group { flex-direction: row; align-items: center; gap: 8px; }
+    .rep-date-group label { flex-shrink: 0; margin-bottom: 0; width: 20px; }
+    .rep-date-group input[type="date"] { font-size: 16px; } /* prevent iOS zoom */
+    .rep-date-sep   { display: none; }
+    .rep-generate-btn { margin-left: 0; justify-content: center; width: 100%; }
+
+    .rep-report     { padding: 16px 14px; gap: 20px; }
+    .rep-header-row { flex-direction: column; gap: 6px; }
+    .rep-generated  { text-align: left; }
+    .rep-title      { font-size: 18px; }
+
+    .rep-summary    { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .rep-card       { padding: 14px 14px; }
+    .rep-card-value { font-size: 22px; }
+    .rep-card-value-lg { font-size: 18px; }
+
+    .rep-status-row  { gap: 6px; }
+    .rep-status-chip { padding: 5px 10px; }
+
+    .rep-table-wrap  { border-radius: 10px; }
+    .rep-table thead th,
+    .rep-table td    { padding: 8px 10px; font-size: 12px; }
+    .rep-product-name { max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+    /* Прогресс-бар доли в мобильной таблице скрываем */
+    .rep-bar-wrap { display: none; }
+}
+
+@media (max-width: 400px) {
+    .rep-summary { grid-template-columns: 1fr; }
+    /* Скрываем доп. колонки в таблице товаров */
+    .rep-table th:nth-child(1),
+    .rep-table td:nth-child(1) { display: none; } /* номер строки */
+}

@@ -426,7 +426,7 @@
         -webkit-overflow-scrolling: touch;
     }
 
-    /* Hide Артикул (3rd) and Статус (6th) columns */
+    /* Скрываем Артикул и Статус */
     .prod-table thead th:nth-child(3),
     .prod-table thead th:nth-child(6),
     .prod-table .prod-sku,
@@ -436,4 +436,67 @@
     .prod-table td { padding: 10px 12px; }
 
     .prod-form-row { grid-template-columns: 1fr; }
+
+    .prod-modal { padding: 24px 20px; }
+}
+
+/* ── Card layout on small phones ── */
+@media (max-width: 480px) {
+    .prod-toolbar { gap: 8px; }
+    .prod-search-wrap { min-width: 0; }
+    .prod-add-btn .prod-add-label { display: none; }
+
+    .prod-table-wrap {
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        overflow-x: unset;
+    }
+
+    .prod-table,
+    .prod-table tbody { display: block; width: 100%; }
+
+    .prod-table thead { display: none; }
+
+    .prod-row {
+        display: block;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        margin-bottom: 10px;
+        overflow: hidden;
+    }
+    .prod-row:hover { background: var(--surface); }
+
+    .prod-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 14px;
+        border-bottom: 1px solid var(--border);
+    }
+    .prod-table td:last-child { border-bottom: none; }
+
+    /* Показываем скрытые ранее колонки */
+    .prod-table .prod-sku,
+    .prod-table .prod-status { display: flex !important; }
+
+    .prod-name-cell { max-width: none; flex: 1; }
+
+    .prod-actions { justify-content: flex-end; }
+
+    /* Модал — почти полный экран */
+    .prod-modal {
+        width: 100%;
+        max-width: 100%;
+        max-height: 100dvh;
+        border-radius: 20px 20px 0 0;
+        padding: 20px 16px;
+        margin-top: auto;
+    }
+    .prod-modal-overlay { align-items: flex-end; }
+    .prod-modal-title { font-size: 16px; }
+    .prod-field input,
+    .prod-field select,
+    .prod-field textarea { font-size: 16px; } /* prevent iOS zoom */
 }

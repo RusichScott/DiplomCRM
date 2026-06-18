@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './Customers.css'
 
-const API = 'https://diplomcrm-production.up.railway.app'
+const API = 'http://localhost:3000'
 
 const STATUS_LABELS = {
     pending:    'Ожидает',

@@ -189,6 +189,94 @@
 .ord-status-select:hover { border-color: var(--border-hover); color: var(--text); }
 .ord-status-select:focus { border-color: var(--purple-light); color: var(--text); }
 
+/* ── Bulk action bar ── */
+.ord-bulk-bar {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(168, 85, 247, 0.08);
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    border-radius: 14px; padding: 10px 16px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+}
+
+.ord-bulk-count {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; font-weight: 600; color: var(--purple-light);
+    flex-shrink: 0;
+}
+
+.ord-bulk-select {
+    height: 34px; padding: 0 10px;
+    background: var(--surface-2); border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text);
+    font-family: 'Inter', sans-serif; font-size: 12.5px;
+    cursor: pointer; outline: none;
+    transition: border-color 0.2s;
+}
+.ord-bulk-select:focus { border-color: var(--purple-light); }
+
+.ord-bulk-clear {
+    margin-left: auto;
+    height: 34px; padding: 0 14px;
+    background: transparent; border: 1px solid var(--border);
+    border-radius: 10px; color: var(--text-muted);
+    font-family: 'Inter', sans-serif; font-size: 12px;
+    cursor: pointer; transition: border-color 0.2s, color 0.2s;
+}
+.ord-bulk-clear:hover { border-color: var(--border-hover); color: var(--text); }
+
+/* ── Card selected state ── */
+.ord-card-selected {
+    border-color: rgba(168, 85, 247, 0.6) !important;
+    background: rgba(168, 85, 247, 0.05);
+    box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.15);
+}
+
+.ord-multi-badge {
+    font-size: 10px; font-weight: 600;
+    background: rgba(168, 85, 247, 0.18);
+    color: var(--purple-light);
+    padding: 2px 7px; border-radius: 999px;
+    text-transform: uppercase; letter-spacing: 0.03em;
+}
+
+/* ── Checkbox ── */
+.ord-checkbox {
+    display: flex; align-items: center;
+    cursor: pointer; flex-shrink: 0;
+}
+
+.ord-checkbox input[type="checkbox"] {
+    position: absolute; opacity: 0; width: 0; height: 0;
+    pointer-events: none;
+}
+
+.ord-checkbox-box {
+    width: 16px; height: 16px;
+    border: 2px solid var(--border);
+    border-radius: 5px;
+    background: var(--surface);
+    transition: border-color 0.18s, background 0.18s;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+
+.ord-checkbox input[type="checkbox"]:checked + .ord-checkbox-box {
+    background: var(--purple-light);
+    border-color: var(--purple-light);
+}
+
+.ord-checkbox input[type="checkbox"]:checked + .ord-checkbox-box::after {
+    content: '';
+    display: block;
+    width: 4px; height: 7px;
+    border: 2px solid #fff;
+    border-top: none; border-left: none;
+    transform: rotate(45deg) translate(-1px, -1px);
+}
+
+.ord-checkbox:hover .ord-checkbox-box { border-color: var(--purple-light); }
+
 /* ── Responsive ── */
 @media (max-width: 900px) {
     .kanban-board { grid-template-columns: 1fr 1fr; }
@@ -202,4 +290,19 @@
     .ord-filters { flex-direction: column; align-items: stretch; }
     .ord-search-wrap { min-width: unset; }
     .ord-date-wrap { justify-content: space-between; }
+
+    /* Bulk bar */
+    .ord-bulk-bar { padding: 10px 12px; gap: 8px; }
+    .ord-bulk-clear { margin-left: 0; }
+
+    /* Card */
+    .ord-card { padding: 12px 14px; }
+    .ord-status-select { max-width: 100px; font-size: 11px; }
+}
+
+@media (max-width: 380px) {
+    .ord-date-wrap { flex-direction: column; }
+    .ord-date { width: 100%; }
+    .ord-card-id { font-size: 12px; }
+    .ord-multi-badge { display: none; } /* слишком узко */
 }

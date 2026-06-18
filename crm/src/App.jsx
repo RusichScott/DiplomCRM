@@ -5,19 +5,29 @@ import './App.css'
 const SESSION_KEY = 'crm_session'
 const SESSION_TTL = 8 * 60 * 60 * 1000
 
-function sessionValid() {
+const ACCOUNTS = {
+  admin:  { password: 'admin',  role: 'admin' },
+  report: { password: 'report', role: 'report' },
+}
+
+function getSession() {
   try {
     const raw = localStorage.getItem(SESSION_KEY)
-    if (!raw) return false
-    const { expiresAt } = JSON.parse(raw)
-    return Date.now() < expiresAt
+    if (!raw) return null
+    const data = JSON.parse(raw)
+    if (Date.now() >= data.expiresAt) return null
+    return data
   } catch {
-    return false
+    return null
   }
 }
 
-function saveSession() {
-  localStorage.setItem(SESSION_KEY, JSON.stringify({ expiresAt: Date.now() + SESSION_TTL }))
+function sessionValid() {
+  return getSession() !== null
+}
+
+function saveSession(role) {
+  localStorage.setItem(SESSION_KEY, JSON.stringify({ expiresAt: Date.now() + SESSION_TTL, role }))
 }
 
 function clearSession() {
@@ -40,6 +50,7 @@ function App() {
   const [toast, setToast]           = useState(null)
   const [loading, setLoading]       = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(sessionValid)
+  const [role, setRole]             = useState(() => getSession()?.role ?? 'admin')
 
   useEffect(() => {
     if (!isLoggedIn) return
@@ -68,9 +79,12 @@ function App() {
     setLoading(true)
 
     setTimeout(() => {
-      if (login === 'admin' && password === 'admin') {
-        saveSession()
+      const account = ACCOUNTS[login]
+      if (account && account.password === password) {
+        saveSession(account.role)
+        setRole(account.role)
         setIsLoggedIn(true)
+        setLoading(false)
       } else {
         setError('Неверный логин или пароль')
         setLoading(false)
@@ -81,7 +95,7 @@ function App() {
   const handleLogout = () => logout(true)
 
   if (isLoggedIn) {
-    return <Dashboard onLogout={handleLogout} />
+    return <Dashboard onLogout={handleLogout} role={role} />
   }
 
   return (

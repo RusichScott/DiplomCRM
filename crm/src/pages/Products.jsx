@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './Products.css'
 
-const API = 'https://diplomcrm-production.up.railway.app'
+const API = 'http://localhost:3000'
 
 const EMPTY_FORM = {
     name: '', category_id: '', sku: '', price: '',
@@ -165,7 +165,7 @@ export default function Products() {
 
                     <button className="prod-add-btn" onClick={openAdd}>
                         <IconPlus />
-                        Добавить
+                        <span className="prod-add-label">Добавить</span>
                     </button>
                 </div>
 

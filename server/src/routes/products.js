@@ -4,9 +4,10 @@ async function productRoutes(fastify) {
 
     // GET /products?category=slug&limit=N — для сайта (только активные)
     fastify.get('/', async (request, reply) => {
-        const { category, limit } = request.query;
+        const { category, limit, is_new } = request.query;
         const where = { is_active: true };
         if (category) where.categories = { slug: category };
+        if (is_new === 'true') where.is_new = true;
 
         const products = await prisma.products.findMany({
             where,

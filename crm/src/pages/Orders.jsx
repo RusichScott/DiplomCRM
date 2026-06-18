@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './Orders.css'
 
-const API = 'https://diplomcrm-production.up.railway.app'
+const API = 'http://localhost:3000'
 
 const COLUMNS = [
     { key: 'processing', label: 'В обработке', color: '#f59e0b', statuses: ['pending', 'processing'] },
@@ -36,6 +36,7 @@ export default function Orders() {
     const [dateTo,   setDateTo]   = useState('')
     const [dragId,   setDragId]   = useState(null)
     const [dragOver, setDragOver] = useState(null)
+    const [selected, setSelected] = useState(new Set())
 
     async function fetchOrders() {
         try {
@@ -51,22 +52,62 @@ export default function Orders() {
 
     useEffect(() => { fetchOrders() }, [])
 
+    function toggleSelect(orderId, e) {
+        e.stopPropagation()
+        setSelected(prev => {
+            const next = new Set(prev)
+            if (next.has(orderId)) next.delete(orderId)
+            else next.add(orderId)
+            return next
+        })
+    }
+
+    function clearSelected() { setSelected(new Set()) }
+
+    async function patchStatus(id, status) {
+        return fetch(`${API}/orders/${id}/status`, {
+            method:  'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ status })
+        })
+    }
+
     async function updateStatus(orderId, newStatus) {
         try {
-            const res = await fetch(`${API}/orders/${orderId}/status`, {
-                method:  'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body:    JSON.stringify({ status: newStatus })
-            })
-            if (!res.ok) return
-            // Перезагружаем список с сервера — гарантирует синхронизацию с БД
+            await patchStatus(orderId, newStatus)
             await fetchOrders()
-        } catch { /* ignore network errors */ }
+        } catch { /* ignore */ }
+    }
+
+    async function handleStatusChange(orderId, newStatus) {
+        // Если карточка выбрана и выбрано несколько — меняем все выбранные
+        if (selected.size > 1 && selected.has(orderId)) {
+            try {
+                await Promise.all([...selected].map(id => patchStatus(id, newStatus)))
+                await fetchOrders()
+                clearSelected()
+            } catch { /* ignore */ }
+        } else {
+            await updateStatus(orderId, newStatus)
+        }
+    }
+
+    async function bulkChangeStatus(newStatus) {
+        if (!selected.size) return
+        try {
+            await Promise.all([...selected].map(id => patchStatus(id, newStatus)))
+            await fetchOrders()
+            clearSelected()
+        } catch { /* ignore */ }
     }
 
     // ── Drag & Drop ─────────────────────────────────────────────────────────────
     function onDragStart(e, orderId) {
-        e.dataTransfer.setData('orderId', String(orderId))
+        // Если тащим выбранную карточку при множественном выборе — тащим все
+        const ids = (selected.size > 1 && selected.has(orderId))
+            ? [...selected]
+            : [orderId]
+        e.dataTransfer.setData('orderIds', JSON.stringify(ids))
         e.dataTransfer.effectAllowed = 'move'
         setDragId(orderId)
     }
@@ -83,19 +124,24 @@ export default function Orders() {
         if (dragOver !== colKey) setDragOver(colKey)
     }
 
-    function onDropZoneDrop(e, colKey) {
+    async function onDropZoneDrop(e, colKey) {
         e.preventDefault()
         e.stopPropagation()
-        const orderId = Number(e.dataTransfer.getData('orderId'))
-        if (orderId) updateStatus(orderId, DROP_STATUS[colKey])
+        const ids = JSON.parse(e.dataTransfer.getData('orderIds') || '[]')
+        if (ids.length) {
+            const newStatus = DROP_STATUS[colKey]
+            try {
+                await Promise.all(ids.map(id => patchStatus(id, newStatus)))
+                await fetchOrders()
+                if (ids.length > 1) clearSelected()
+            } catch { /* ignore */ }
+        }
         setDragId(null)
         setDragOver(null)
     }
 
     function onColDragLeave(e) {
-        if (!e.currentTarget.contains(e.relatedTarget)) {
-            setDragOver(null)
-        }
+        if (!e.currentTarget.contains(e.relatedTarget)) setDragOver(null)
     }
 
     // ── Filter ──────────────────────────────────────────────────────────────────
@@ -144,6 +190,28 @@ export default function Orders() {
                     <span className="ord-count">{filtered.length} заказов</span>
                 </div>
 
+                {/* Bulk action bar */}
+                {selected.size > 0 && (
+                    <div className="ord-bulk-bar">
+                        <span className="ord-bulk-count">
+                            <IconCheck /> {selected.size} выбрано
+                        </span>
+                        <select
+                            className="ord-bulk-select"
+                            defaultValue=""
+                            onChange={e => { if (e.target.value) bulkChangeStatus(e.target.value) }}
+                        >
+                            <option value="" disabled>Сменить статус...</option>
+                            {STATUS_OPTIONS.map(opt => (
+                                <option key={opt.value} value={opt.value}>{opt.label}</option>
+                            ))}
+                        </select>
+                        <button className="ord-bulk-clear" onClick={clearSelected}>
+                            Снять выделение
+                        </button>
+                    </div>
+                )}
+
                 {loading && <div className="ord-state"><div className="ord-spinner" /><p>Загрузка...</p></div>}
                 {error   && <div className="ord-state ord-error"><IconErr /><p>{error}</p></div>}
 
@@ -164,7 +232,6 @@ export default function Orders() {
                                         <span className="kanban-col-count">{colOrders.length}</span>
                                     </div>
 
-                                    {/* Зона дропа — именно здесь обрабатываем dragover/drop */}
                                     <div
                                         className="kanban-drop-zone"
                                         onDragOver={e => onDropZoneDragOver(e, col.key)}
@@ -180,9 +247,12 @@ export default function Orders() {
                                                 key={order.id}
                                                 order={order}
                                                 dragging={dragId === order.id}
+                                                isSelected={selected.has(order.id)}
+                                                multiSelected={selected.size > 1 && selected.has(order.id)}
+                                                onToggleSelect={toggleSelect}
                                                 onDragStart={onDragStart}
                                                 onDragEnd={onDragEnd}
-                                                onStatusChange={updateStatus}
+                                                onStatusChange={handleStatusChange}
                                             />
                                         ))}
                                     </div>
@@ -196,17 +266,26 @@ export default function Orders() {
     )
 }
 
-function OrderCard({ order, dragging, onDragStart, onDragEnd, onStatusChange }) {
+function OrderCard({ order, dragging, isSelected, multiSelected, onToggleSelect, onDragStart, onDragEnd, onStatusChange }) {
     const u = order.users
     return (
         <div
-            className={`ord-card ${dragging ? 'ord-card-dragging' : ''}`}
+            className={`ord-card ${dragging ? 'ord-card-dragging' : ''} ${isSelected ? 'ord-card-selected' : ''}`}
             draggable={true}
             onDragStart={e => onDragStart(e, order.id)}
             onDragEnd={onDragEnd}
         >
             <div className="ord-card-top">
+                <label className="ord-checkbox" onClick={e => e.stopPropagation()}>
+                    <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={e => onToggleSelect(order.id, e)}
+                    />
+                    <span className="ord-checkbox-box" />
+                </label>
                 <span className="ord-card-id">#{order.id}</span>
+                {multiSelected && <span className="ord-multi-badge">группа</span>}
                 <span className="ord-card-date">{fmtDate(order.created_at)}</span>
             </div>
 
@@ -231,7 +310,6 @@ function OrderCard({ order, dragging, onDragStart, onDragEnd, onStatusChange }) 
 
             <div className="ord-card-footer">
                 <span className="ord-card-total">{fmtSum(order.total_amount)}</span>
-                {/* Select — надёжная альтернатива drag & drop */}
                 <select
                     className="ord-status-select"
                     value={order.status}
@@ -252,6 +330,14 @@ function IconSearch() {
     return (
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+    )
+}
+
+function IconCheck() {
+    return (
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="20 6 9 17 4 12"/>
         </svg>
     )
 }

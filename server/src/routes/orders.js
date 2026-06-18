@@ -66,7 +66,14 @@ async function orderRoutes(fastify) {
     fastify.get('/my', { preHandler: [fastify.authenticate] }, async (request, reply) => {
         const orders = await prisma.orders.findMany({
             where:   { user_id: request.user.id },
-            include: { order_items: true, addresses: true },
+            include: {
+                order_items: {
+                    include: {
+                        products: { select: { product_images: true } }
+                    }
+                },
+                addresses: true
+            },
             orderBy: { created_at: 'desc' }
         });
         return reply.send(orders);
@@ -89,29 +96,125 @@ async function orderRoutes(fastify) {
             (sum, item) => sum + Number(item.products.price) * item.quantity, 0
         );
 
-        const order = await prisma.orders.create({
-            data: {
-                user_id:    request.user.id,
-                address_id: address_id ? Number(address_id) : null,
-                status:     'pending',
-                total_amount,
-                comment:    comment || null,
-                order_items: {
-                    create: cartItems.map(item => ({
-                        product_id:   item.product_id,
-                        product_name: item.products.name,
-                        price:        item.products.price,
-                        quantity:     item.quantity
-                    }))
-                }
-            },
-            include: { order_items: true }
-        });
+        const [order] = await prisma.$transaction([
+            prisma.orders.create({
+                data: {
+                    user_id:    request.user.id,
+                    address_id: address_id ? Number(address_id) : null,
+                    status:     'pending',
+                    total_amount,
+                    comment:    comment || null,
+                    order_items: {
+                        create: cartItems.map(item => ({
+                            product_id:   item.product_id,
+                            product_name: item.products.name,
+                            price:        item.products.price,
+                            quantity:     item.quantity
+                        }))
+                    }
+                },
+                include: { order_items: true }
+            }),
+            ...cartItems.map(item =>
+                prisma.products.update({
+                    where: { id: item.product_id },
+                    data:  { stock: { decrement: item.quantity } }
+                })
+            ),
+            prisma.cart_items.deleteMany({ where: { user_id: request.user.id } })
+        ]);
 
-        await prisma.cart_items.deleteMany({ where: { user_id: request.user.id } });
+        try {
+            fastify.io.emit('order:created', { orderId: order.id });
+        } catch (e) {
+            fastify.log.warn(e, 'socket.io emit failed');
+        }
 
         return reply.status(201).send(order);
     });
+
+    // GET /orders/report?from=YYYY-MM-DD&to=YYYY-MM-DD
+    fastify.get('/report', async (request, reply) => {
+        const { from, to } = request.query
+        if (!from || !to) {
+            return reply.status(400).send({ error: 'Параметры from и to обязательны' })
+        }
+
+        const dateFrom = new Date(from)
+        const dateTo   = new Date(to)
+        dateTo.setHours(23, 59, 59, 999)
+
+        if (isNaN(dateFrom) || isNaN(dateTo)) {
+            return reply.status(400).send({ error: 'Неверный формат даты' })
+        }
+
+        const [totals, allOrders, byStatus, byProduct] = await Promise.all([
+            // Выручка и кол-во без отменённых
+            prisma.orders.aggregate({
+                where: { created_at: { gte: dateFrom, lte: dateTo }, status: { not: 'cancelled' } },
+                _sum:   { total_amount: true },
+                _count: { id: true },
+                _avg:   { total_amount: true }
+            }),
+            // Все заказы для общего счётчика
+            prisma.orders.aggregate({
+                where: { created_at: { gte: dateFrom, lte: dateTo } },
+                _count: { id: true }
+            }),
+            // Разбивка по статусам
+            prisma.orders.groupBy({
+                by:    ['status'],
+                where: { created_at: { gte: dateFrom, lte: dateTo } },
+                _count: { id: true },
+                orderBy: { _count: { id: 'desc' } }
+            }),
+            // По товарам с категорией
+            prisma.$queryRaw`
+                SELECT
+                    p.name          AS product_name,
+                    c.name          AS category_name,
+                    SUM(oi.quantity)::int                    AS qty,
+                    SUM(oi.price * oi.quantity)::numeric     AS revenue
+                FROM order_items oi
+                JOIN orders    o ON o.id  = oi.order_id
+                JOIN products  p ON p.id  = oi.product_id
+                JOIN categories c ON c.id = p.category_id
+                WHERE o.created_at >= ${dateFrom}
+                  AND o.created_at <= ${dateTo}
+                  AND o.status != 'cancelled'
+                GROUP BY p.id, p.name, c.id, c.name
+                ORDER BY qty DESC, revenue DESC
+            `
+        ])
+
+        // Группируем по категориям из byProduct
+        const catMap = {}
+        for (const row of byProduct) {
+            const cat = row.category_name
+            if (!catMap[cat]) catMap[cat] = { name: cat, qty: 0, revenue: 0 }
+            catMap[cat].qty     += Number(row.qty)
+            catMap[cat].revenue += Number(row.revenue)
+        }
+        const byCategory = Object.values(catMap).sort((a, b) => b.qty - a.qty)
+
+        return reply.send({
+            period: { from, to },
+            summary: {
+                totalOrders:  allOrders._count.id,
+                activeOrders: totals._count.id,
+                totalRevenue: Number(totals._sum.total_amount ?? 0),
+                avgOrder:     Math.round(Number(totals._avg.total_amount ?? 0))
+            },
+            byStatus: byStatus.map(s => ({ status: s.status, count: s._count.id })),
+            byCategory,
+            byProduct: byProduct.map(r => ({
+                product_name:  r.product_name,
+                category_name: r.category_name,
+                qty:           Number(r.qty),
+                revenue:       Number(r.revenue)
+            }))
+        })
+    })
 
     // PATCH /orders/:id/status — изменить статус (CRM)
     fastify.patch('/:id/status', async (request, reply) => {

@@ -4,9 +4,10 @@ import Customers    from './Customers'
 import Orders       from './Orders'
 import Products     from './Products'
 import OrderHistory from './OrderHistory'
+import Reports      from './Reports'
 import './Dashboard.css'
 
-const API = 'https://diplomcrm-production.up.railway.app'
+const API = 'http://localhost:3000'
 
 const PERIODS = [
   { key: 'day',   label: 'День' },
@@ -18,11 +19,12 @@ const PERIODS = [
 const COLORS = ['#7c3aed', '#a855f7', '#c026d3', '#db2777', '#f472b6', '#f59e0b']
 
 const NAV = [
-  { label: 'Дашборд',  icon: <IconDashboard /> },
-  { label: 'Заказы',   icon: <IconOrders /> },
-  { label: 'Клиенты',  icon: <IconCustomers /> },
-  { label: 'Товары',   icon: <IconProducts /> },
-  { label: 'История',  icon: <IconHistory /> },
+  { label: 'Дашборд',  icon: <IconDashboard />, roles: ['admin', 'report'] },
+  { label: 'Заказы',   icon: <IconOrders />,    roles: ['admin'] },
+  { label: 'Клиенты',  icon: <IconCustomers />, roles: ['admin'] },
+  { label: 'Товары',   icon: <IconProducts />,  roles: ['admin'] },
+  { label: 'История',  icon: <IconHistory />,   roles: ['admin'] },
+  { label: 'Отчёты',   icon: <IconReports />,   roles: ['admin', 'report'] },
 ]
 
 const fmt = (n) => Number(n).toLocaleString('ru-RU') + ' ₽'
@@ -47,16 +49,18 @@ function CustomTooltip({ active, payload, totalQty }) {
   )
 }
 
-export default function Dashboard({ onLogout }) {
+export default function Dashboard({ onLogout, role = 'admin' }) {
   const [period,      setPeriod]     = useState('month')
-  const [activeNav,   setActiveNav]  = useState(0)
+  const [activeNav,   setActiveNav]  = useState('Дашборд')
   const [analytics,   setAnalytics]  = useState(null)
   const [anaLoading,  setAnaLoading] = useState(true)
   const [chartReady,  setChartReady] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
-  function navClick(i) {
-    setActiveNav(i)
+  const visibleNav = NAV.filter(item => item.roles.includes(role))
+
+  function navClick(label) {
+    setActiveNav(label)
     setSidebarOpen(false)
   }
 
@@ -66,11 +70,20 @@ export default function Dashboard({ onLogout }) {
   }, [])
 
   useEffect(() => {
-    setAnaLoading(true)
-    fetch(`${API}/orders/analytics?period=${period}`)
-      .then(r => r.ok ? r.json() : Promise.reject())
-      .then(data => { setAnalytics(data); setAnaLoading(false) })
-      .catch(() => setAnaLoading(false))
+    let initial = true
+
+    const load = () => {
+      if (initial) setAnaLoading(true)
+      fetch(`${API}/orders/analytics?period=${period}`)
+        .then(r => r.ok ? r.json() : Promise.reject())
+        .then(data => { setAnalytics(data); setAnaLoading(false) })
+        .catch(() => setAnaLoading(false))
+        .finally(() => { initial = false })
+    }
+
+    load()
+    const timer = setInterval(load, 30_000)
+    return () => clearInterval(timer)
   }, [period])
 
   const chartData = (analytics?.topProducts ?? []).map((p, i) => ({
@@ -104,11 +117,11 @@ export default function Dashboard({ onLogout }) {
           <span className="sidebar-logo-sub">CRM</span>
         </div>
         <nav className="sidebar-nav">
-          {NAV.map((item, i) => (
+          {visibleNav.map(item => (
             <button
               key={item.label}
-              className={`nav-item ${activeNav === i ? 'active' : ''}`}
-              onClick={() => navClick(i)}
+              className={`nav-item ${activeNav === item.label ? 'active' : ''}`}
+              onClick={() => navClick(item.label)}
             >
               <span className="nav-icon">{item.icon}</span>
               <span className="nav-label">{item.label}</span>
@@ -124,7 +137,11 @@ export default function Dashboard({ onLogout }) {
       {/* Main */}
       <main className="crm-main">
 
-        {activeNav === 1 ? <Orders /> : activeNav === 2 ? <Customers /> : activeNav === 3 ? <Products /> : activeNav === 4 ? <OrderHistory /> : (
+        {activeNav === 'Заказы'  ? <Orders /> :
+         activeNav === 'Клиенты' ? <Customers /> :
+         activeNav === 'Товары'  ? <Products /> :
+         activeNav === 'История' ? <OrderHistory /> :
+         activeNav === 'Отчёты' ? <Reports /> : (
         <>
         <header className="crm-header">
           <div>
@@ -160,14 +177,14 @@ export default function Dashboard({ onLogout }) {
               {chartData.length === 0 ? (
                 <div className="ana-empty">Нет заказов за этот период</div>
               ) : chartReady ? (
-                <ResponsiveContainer width="100%" height={320}>
-                  <PieChart>
+                <ResponsiveContainer width="100%" height={300}>
+                  <PieChart margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
                     <Pie
                       data={chartData}
                       cx="50%"
                       cy="50%"
-                      innerRadius={80}
-                      outerRadius={130}
+                      innerRadius={72}
+                      outerRadius={118}
                       paddingAngle={3}
                       dataKey="qty"
                     >
@@ -289,6 +306,16 @@ function IconLogout() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+    </svg>
+  )
+}
+function IconReports() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+      <polyline points="14 2 14 8 20 8"/>
+      <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+      <line x1="10" y1="9" x2="8" y2="9"/>
     </svg>
   )
 }

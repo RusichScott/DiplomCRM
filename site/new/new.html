@@ -83,81 +83,9 @@
         <button class="filter-btn" data-filter="necklaces">Колье</button>
     </div>
 
-    <div class="products new-products">
-
-        <div class="product-card" data-cat="rings">
-            <div class="new-badge">Новинка</div>
-            <div class="product-img" style="background-image: url('');"></div>
-            <div class="product-content">
-                <h3 class="product-title">Серебряное кольцо LUNA с лунным камнем</h3>
-                <p class="product-price">16 499 ₽</p>
-            </div>
-        </div>
-
-        <div class="product-card" data-cat="earrings">
-            <div class="new-badge">Новинка</div>
-            <div class="product-img" style="background-image: url('');"></div>
-            <div class="product-content">
-                <h3 class="product-title">Серьги-кольца GALA с гранатами</h3>
-                <p class="product-price">11 299 ₽</p>
-            </div>
-        </div>
-
-        <div class="product-card" data-cat="necklaces">
-            <div class="new-badge">Новинка</div>
-            <div class="product-img" style="background-image: url('');"></div>
-            <div class="product-content">
-                <h3 class="product-title">Колье-чокер LUNA с подвеской</h3>
-                <p class="product-price">9 899 ₽</p>
-            </div>
-        </div>
-
-        <div class="product-card" data-cat="bracelets">
-            <div class="new-badge">Новинка</div>
-            <div class="product-img" style="background-image: url('');"></div>
-            <div class="product-content">
-                <h3 class="product-title">Жёсткий браслет MAYA P с хрусталём</h3>
-                <p class="product-price">18 700 ₽</p>
-            </div>
-        </div>
-
-        <div class="product-card" data-cat="cuffs">
-            <div class="new-badge">Новинка</div>
-            <div class="product-img" style="background-image: url('');"></div>
-            <div class="product-content">
-                <h3 class="product-title">Кафф GALA с жемчугом</h3>
-                <p class="product-price">13 400 ₽</p>
-            </div>
-        </div>
-
-        <div class="product-card" data-cat="rings">
-            <div class="new-badge">Новинка</div>
-            <div class="product-img" style="background-image: url('');"></div>
-            <div class="product-content">
-                <h3 class="product-title">Широкое кольцо EROS с дорожкой гранатов</h3>
-                <p class="product-price">21 000 ₽</p>
-            </div>
-        </div>
-
-        <div class="product-card" data-cat="earrings">
-            <div class="new-badge">Новинка</div>
-            <div class="product-img" style="background-image: url('');"></div>
-            <div class="product-content">
-                <h3 class="product-title">Длинные серьги GALA с жемчугом</h3>
-                <p class="product-price">14 100 ₽</p>
-            </div>
-        </div>
-
-        <div class="product-card" data-cat="bracelets">
-            <div class="new-badge">Новинка</div>
-            <div class="product-img" style="background-image: url('');"></div>
-            <div class="product-content">
-                <h3 class="product-title">Плетёный браслет LUNA из серебра</h3>
-                <p class="product-price">7 200 ₽</p>
-            </div>
-        </div>
-
-    </div>
+    <div class="products new-products" id="newProductsGrid" style="display:none;"></div>
+    <div id="newLoading" style="text-align:center;padding:60px;color:#999;font-size:15px;">Загрузка...</div>
+    <div id="newError" style="display:none;text-align:center;padding:60px;color:#999;font-size:15px;">Не удалось загрузить товары</div>
 </main>
 
 <footer>
@@ -205,21 +133,72 @@
     </div>
 </footer>
 
+<script src="../shared/shop.js"></script>
+<script src="../shared/cart.js"></script>
 <script src="../shared/nav.js"></script>
 <script>
+const SLUG_TO_CAT = {
+    koltsa:   'rings',
+    sergi:    'earrings',
+    kaffy:    'cuffs',
+    braslety: 'bracelets',
+    kole:     'necklaces',
+    uhod:     'other',
+};
+
 const filterBtns = document.querySelectorAll('.filter-btn[data-filter]');
-const cards      = document.querySelectorAll('.product-card[data-cat]');
+const grid       = document.getElementById('newProductsGrid');
+const loading    = document.getElementById('newLoading');
+const errorEl    = document.getElementById('newError');
+
+let activeFilter = 'all';
+
+function applyFilter() {
+    grid.querySelectorAll('.product-card[data-cat]').forEach(card => {
+        card.style.display = (activeFilter === 'all' || card.dataset.cat === activeFilter) ? '' : 'none';
+    });
+}
 
 filterBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function () {
         filterBtns.forEach(b => b.classList.remove('active'));
         this.classList.add('active');
-        const filter = this.dataset.filter;
-        cards.forEach(card => {
-            card.style.display = (filter === 'all' || card.dataset.cat === filter) ? '' : 'none';
-        });
+        activeFilter = this.dataset.filter;
+        applyFilter();
     });
 });
+
+async function loadNew() {
+    try {
+        const res = await fetch(`${API}/products?is_new=true`);
+        if (!res.ok) throw new Error(res.status);
+        const products = await res.json();
+
+        loading.style.display = 'none';
+
+        if (!products.length) {
+            errorEl.textContent   = 'Новинок пока нет';
+            errorEl.style.display = 'block';
+            return;
+        }
+
+        grid.innerHTML = products.map(p => {
+            const cat  = SLUG_TO_CAT[p.categories?.slug] || 'other';
+            const card = buildProductCard(p);
+            return card.replace('<div class="product-card"', `<div class="product-card" data-cat="${cat}"`);
+        }).join('');
+
+        markWishlistButtons();
+        grid.style.display = '';
+        applyFilter();
+
+    } catch {
+        loading.style.display = 'none';
+        errorEl.style.display = 'block';
+    }
+}
+
+loadNew();
 </script>
 </body>
 </html>
